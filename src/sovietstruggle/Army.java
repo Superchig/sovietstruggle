@@ -11,5 +11,16 @@ package sovietstruggle;
  */
 public class Army
 {
-	
+  private String name;
+  private Area area;
+  private Faction controller;
+  private int manpower;
+  
+  public Army(String name, Area area, Faction controller)
+  {
+    this.name = name;
+    this.area = area;
+    this.controller = controller;
+    manpower = 1000;
+  }
 }
