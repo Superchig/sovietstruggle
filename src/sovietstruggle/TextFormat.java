@@ -5,12 +5,16 @@
  */
 package sovietstruggle;
 
+import java.text.NumberFormat;
+
 /**
  *
  * @author chiggie
  */
 public class TextFormat
 {
+	private static NumberFormat fmt = NumberFormat.getNumberInstance();
+	
 	public static String spaces(int numSpaces)
 	{
 		String result = "";
@@ -21,5 +25,10 @@ public class TextFormat
 		}
 		
 		return result;
+	}
+	
+	public static String normNumFormat(int num)
+	{
+		return fmt.format(num);
 	}
 }

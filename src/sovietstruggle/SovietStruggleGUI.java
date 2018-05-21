@@ -81,12 +81,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     leninText.setText("<html>\n<p style=\"text-align:center\">\nComrade Lenin Is Always Watching!\n</p>\n</html>");
     leninText.setFocusable(false);
 
-    armyList.setModel(new javax.swing.AbstractListModel<String>()
-    {
-      String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-      public int getSize() { return strings.length; }
-      public String getElementAt(int i) { return strings[i]; }
-    });
+    armyList.setModel(armyModel);
     armyScroll.setViewportView(armyList);
 
     jLabel1.setFont(new java.awt.Font("Cantarell", 0, 24)); // NOI18N
@@ -150,7 +145,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
             .addComponent(trainButton)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(moveButton)))
-        .addContainerGap(134, Short.MAX_VALUE))
+        .addContainerGap(254, Short.MAX_VALUE))
     );
 
     jTabbedPane1.addTab("Political", jPanel3);
@@ -298,6 +293,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
 
   private void initGame()
   {
+		// Create areas
     areas = new ArrayList<>();
     areas.add(new Area("Moscow", IMG_PATH + "lenin.jpg"));
     areas.add(new Area("West Ukraine", IMG_PATH + "lenin_small.png"));
@@ -311,11 +307,19 @@ public class SovietStruggleGUI extends javax.swing.JFrame
       areaModel.addElement(a.toString());
     }
     
+		// Create factions
     playerFaction = new Faction("Bolsheviks");
-    
+
+		// Create armies
     Army latRifle = new Army("Latvian Riflemen", latvia, playerFaction);
     playerFaction.addArmy(latRifle);
     latvia.addArmy(latRifle);
+		
+		armyModel = new DefaultListModel<>();
+		for (Army a : playerFaction.getArmies())
+		{
+			armyModel.addElement(a.toString());
+		}
   }
 	
 	private void updateAreaList()
@@ -332,7 +336,10 @@ public class SovietStruggleGUI extends javax.swing.JFrame
 
   // Use parallel arrays structure with areas and areaModel
   private ArrayList<Area> areas;
+	// Assigned as areaList's model in NetBeans Design section
   private DefaultListModel<String> areaModel;
+	// Use parallel arrays structure with playerFaction.armies and armyModel
+	private DefaultListModel<String> armyModel;
   
   private Faction playerFaction;
   private ArrayList<Faction> enemyFactions;

@@ -23,4 +23,10 @@ public class Army
     this.controller = controller;
     manpower = 1000;
   }
+	
+	public String toString()
+	{
+		return area.getName() + TextFormat.spaces(13) + name + TextFormat.spaces(13)
+						+ TextFormat.normNumFormat(manpower);
+	}
 }

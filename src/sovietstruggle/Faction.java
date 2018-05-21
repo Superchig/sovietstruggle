@@ -23,6 +23,11 @@ public class Faction
     areas = new ArrayList<>();
     armies = new ArrayList<>();
   }
+
+	public ArrayList<Army> getArmies()
+	{
+		return armies;
+	}
   
   public void addArmy(Army a)
   {
