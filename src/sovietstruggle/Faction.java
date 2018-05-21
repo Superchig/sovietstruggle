@@ -34,8 +34,10 @@ public class Faction
     armies.add(a);
   }
   
-  public void addArmy(String n, Area a)
+  public Army makeArmy(String n, Area a)
   {
-    addArmy(new Army(n, a, this));
+		Army army = new Army(n, a, this);
+		a.addArmy(army);
+    return army;
   }
 }

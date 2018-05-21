@@ -311,9 +311,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     playerFaction = new Faction("Bolsheviks");
 
 		// Create armies
-    Army latRifle = new Army("Latvian Riflemen", latvia, playerFaction);
-    playerFaction.addArmy(latRifle);
-    latvia.addArmy(latRifle);
+		playerFaction.makeArmy("Latvian Riflemen", latvia);
 		
 		armyModel = new DefaultListModel<>();
 		for (Army a : playerFaction.getArmies())
