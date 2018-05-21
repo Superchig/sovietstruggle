@@ -52,7 +52,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     jLabel2 = new javax.swing.JLabel();
     jScrollPane1 = new javax.swing.JScrollPane();
     areaList = new javax.swing.JList<>();
-    jButton1 = new javax.swing.JButton();
+    updateAreaButton = new javax.swing.JButton();
     jPanel4 = new javax.swing.JPanel();
     jPanel5 = new javax.swing.JPanel();
 
@@ -164,7 +164,14 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     areaList.setCellRenderer(new AreaListRenderer(areas));
     jScrollPane1.setViewportView(areaList);
 
-    jButton1.setText("Initialize");
+    updateAreaButton.setText("Update Areas");
+    updateAreaButton.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
+        updateAreaButtonActionPerformed(evt);
+      }
+    });
 
     javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
     jPanel2.setLayout(jPanel2Layout);
@@ -177,8 +184,8 @@ public class SovietStruggleGUI extends javax.swing.JFrame
           .addGroup(jPanel2Layout.createSequentialGroup()
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jButton1)))
-        .addContainerGap(357, Short.MAX_VALUE))
+            .addComponent(updateAreaButton)))
+        .addContainerGap(345, Short.MAX_VALUE))
     );
     jPanel2Layout.setVerticalGroup(
       jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,7 +195,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jButton1))
+          .addComponent(updateAreaButton))
         .addContainerGap(372, Short.MAX_VALUE))
     );
 
@@ -238,6 +245,15 @@ public class SovietStruggleGUI extends javax.swing.JFrame
 
     pack();
   }// </editor-fold>//GEN-END:initComponents
+
+  private void updateAreaButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_updateAreaButtonActionPerformed
+  {//GEN-HEADEREND:event_updateAreaButtonActionPerformed
+    areaModel.clear();
+    for (Area a : areas)
+    {
+      areaModel.addElement(a.toString());
+    }
+  }//GEN-LAST:event_updateAreaButtonActionPerformed
 
   /**
    * @param args the command line arguments
@@ -321,7 +337,6 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   private javax.swing.JList<String> armyList;
   private javax.swing.JScrollPane armyScroll;
   private javax.swing.JButton expandButton;
-  private javax.swing.JButton jButton1;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JPanel jPanel2;
@@ -336,5 +351,6 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   private javax.swing.JLabel polPowDisplay;
   private javax.swing.JLabel polPowLabel;
   private javax.swing.JButton trainButton;
+  private javax.swing.JButton updateAreaButton;
   // End of variables declaration//GEN-END:variables
 }
