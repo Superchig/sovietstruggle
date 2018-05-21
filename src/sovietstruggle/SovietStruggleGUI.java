@@ -248,11 +248,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
 
   private void updateAreaButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_updateAreaButtonActionPerformed
   {//GEN-HEADEREND:event_updateAreaButtonActionPerformed
-    areaModel.clear();
-    for (Area a : areas)
-    {
-      areaModel.addElement(a.toString());
-    }
+    updateAreaList();
   }//GEN-LAST:event_updateAreaButtonActionPerformed
 
   /**
@@ -321,6 +317,15 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     playerFaction.addArmy(latRifle);
     latvia.addArmy(latRifle);
   }
+	
+	private void updateAreaList()
+	{
+		areaModel.clear();
+    for (Area a : areas)
+    {
+      areaModel.addElement(a.toString());
+    }
+	}
 
   // Custom variables declaration
   private final String IMG_PATH = "src/sovietstruggle/img/";
