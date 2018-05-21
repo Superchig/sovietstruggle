@@ -289,6 +289,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
 		areas = new ArrayList<>();
 		areas.add(new Area("Moscow", IMG_PATH + "lenin.jpg"));
 		areas.add(new Area("West Ukraine", IMG_PATH + "lenin_small.png"));
+                areas.add(new Area("Latvia", "https://cdn.britannica.com/700x450/53/6253-004-E40A3608.jpg"));
 		
 		armyModel = new DefaultListModel<>();
 		for (Area a : areas)

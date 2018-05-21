@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import java.net.URL;
 
 /**
  *
@@ -52,7 +53,11 @@ public class Area
   {
     try
     {
-      BufferedImage img = ImageIO.read(new File(imgPath));
+      BufferedImage img;
+      if (imgPath.indexOf("http") == 0)
+        img = ImageIO.read(new URL(imgPath));
+      else
+        img = ImageIO.read(new File(imgPath));
       return new ImageIcon(img.getScaledInstance(-1, IMAGE_HEIGHT, Image.SCALE_SMOOTH));
     } catch (IOException e)
     {
