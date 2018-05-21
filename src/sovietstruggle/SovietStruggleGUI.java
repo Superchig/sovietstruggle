@@ -289,7 +289,9 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     areas = new ArrayList<>();
     areas.add(new Area("Moscow", IMG_PATH + "lenin.jpg"));
     areas.add(new Area("West Ukraine", IMG_PATH + "lenin_small.png"));
-    areas.add(new Area("Latvia", "https://cdn.britannica.com/700x450/53/6253-004-E40A3608.jpg"));
+    
+    Area latvia = new Area("Latvia", "https://cdn.britannica.com/700x450/53/6253-004-E40A3608.jpg");
+    areas.add(latvia);
 
     areaModel = new DefaultListModel<>();
     for (Area a : areas)
@@ -298,7 +300,10 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     }
     
     playerFaction = new Faction("Bolsheviks");
-    playerFaction.addArmy("Latvian Riflemen", areas.get(2));
+    
+    Army latRifle = new Army("Latvian Riflemen", latvia, playerFaction);
+    playerFaction.addArmy(latRifle);
+    latvia.addArmy(latRifle);
   }
 
   // Custom variables declaration
