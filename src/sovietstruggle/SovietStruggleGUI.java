@@ -5,8 +5,13 @@
  */
 package sovietstruggle;
 
+import java.awt.Color;
 import java.util.ArrayList;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -36,7 +41,6 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   private void initComponents()
   {
 
-    jDialog1 = new javax.swing.JDialog();
     jTabbedPane1 = new javax.swing.JTabbedPane();
     PoliticalPanel = new javax.swing.JPanel();
     polPowLabel = new javax.swing.JLabel();
@@ -56,17 +60,6 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     updateAreaButton = new javax.swing.JButton();
     FactionsPanel = new javax.swing.JPanel();
 
-    javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
-    jDialog1.getContentPane().setLayout(jDialog1Layout);
-    jDialog1Layout.setHorizontalGroup(
-      jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 400, Short.MAX_VALUE)
-    );
-    jDialog1Layout.setVerticalGroup(
-      jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 300, Short.MAX_VALUE)
-    );
-
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setTitle("Soviet Struggle");
     setPreferredSize(new java.awt.Dimension(650, 600));
@@ -76,6 +69,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     jTabbedPane1.setPreferredSize(new java.awt.Dimension(600, 525));
     jTabbedPane1.setRequestFocusEnabled(false);
 
+    PoliticalPanel.setBackground(BG_COLOR);
     PoliticalPanel.setPreferredSize(new java.awt.Dimension(600, 400));
 
     polPowLabel.setFont(new java.awt.Font("Cantarell", 0, 24)); // NOI18N
@@ -284,7 +278,14 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     {
       public void run()
       {
-        new SovietStruggleGUI().setVisible(true);
+				// Modified slightly to allow for initial dialog open
+				SovietStruggleGUI game = new SovietStruggleGUI();
+        game.setVisible(true);
+				
+				String intro = TextFormat.readFile(TEXT_PATH + "intro.txt");
+				
+				game.showPlainDialog(intro,
+								"Dictatorship of the Proletariat!");
       }
     });
   }
@@ -326,10 +327,31 @@ public class SovietStruggleGUI extends javax.swing.JFrame
       areaModel.addElement(a.toString());
     }
 	}
+	
+	private void showPlainDialog(String text, String title)
+	{
+		JTextArea msg = new JTextArea(text);
+		msg.setLineWrap(true);
+		msg.setWrapStyleWord(true);
+		msg.setEditable(false);
+		msg.setBorder(BorderFactory.createEmptyBorder());
+		msg.setRows(10);
+		msg.setColumns(30);
+		msg.setBackground(BG_COLOR);
+		
+		JScrollPane scrollPane = new JScrollPane(msg);
+		scrollPane.setBorder(BorderFactory.createEmptyBorder());
+		scrollPane.setBackground(BG_COLOR);
+		
+		JOptionPane.showMessageDialog(this, scrollPane, title,
+						JOptionPane.PLAIN_MESSAGE);
+	}
 
   // Custom variables declaration
-  private final String IMG_PATH = "src/sovietstruggle/img/";
-
+  private static final String IMG_PATH = "src/sovietstruggle/img/";
+	private static final String TEXT_PATH = "src/sovietstruggle/text/";
+	private static final Color BG_COLOR = new Color(214, 217, 223);
+	
   // Use parallel arrays structure with areas and areaModel
   private ArrayList<Area> areas;
 	// Assigned as areaList's model in NetBeans Design section
@@ -349,7 +371,6 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   private javax.swing.JLabel armyListTitlePanel;
   private javax.swing.JScrollPane armyScroll;
   private javax.swing.JButton expandButton;
-  private javax.swing.JDialog jDialog1;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JTabbedPane jTabbedPane1;
