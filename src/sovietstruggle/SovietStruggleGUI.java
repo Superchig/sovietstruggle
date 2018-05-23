@@ -54,8 +54,8 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     trainButton = new javax.swing.JButton();
     moveButton = new javax.swing.JButton();
     AreaPanel = new javax.swing.JPanel();
-    jLabel2 = new javax.swing.JLabel();
-    jScrollPane1 = new javax.swing.JScrollPane();
+    areaTitle = new javax.swing.JLabel();
+    areaScroll = new javax.swing.JScrollPane();
     areaList = new javax.swing.JList<>();
     updateAreaButton = new javax.swing.JButton();
     FactionsPanel = new javax.swing.JPanel();
@@ -155,14 +155,14 @@ public class SovietStruggleGUI extends javax.swing.JFrame
 
     jTabbedPane1.addTab("Political", PoliticalPanel);
 
-    jLabel2.setFont(new java.awt.Font("Cantarell", 0, 24)); // NOI18N
-    jLabel2.setText("Area List");
+    areaTitle.setFont(new java.awt.Font("Cantarell", 0, 24)); // NOI18N
+    areaTitle.setText("Area List");
 
     areaList.setModel(areaModel);
     areaList.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
     areaList.setVisibleRowCount(4);
     areaList.setCellRenderer(new AreaListRenderer(areas));
-    jScrollPane1.setViewportView(areaList);
+    areaScroll.setViewportView(areaList);
 
     updateAreaButton.setText("Update Areas");
     updateAreaButton.addActionListener(new java.awt.event.ActionListener()
@@ -180,9 +180,9 @@ public class SovietStruggleGUI extends javax.swing.JFrame
       .addGroup(AreaPanelLayout.createSequentialGroup()
         .addContainerGap()
         .addGroup(AreaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jLabel2)
+          .addComponent(areaTitle)
           .addGroup(AreaPanelLayout.createSequentialGroup()
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(areaScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(updateAreaButton)))
         .addContainerGap(345, Short.MAX_VALUE))
@@ -191,10 +191,10 @@ public class SovietStruggleGUI extends javax.swing.JFrame
       AreaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(AreaPanelLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(jLabel2)
+        .addComponent(areaTitle)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(AreaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(areaScroll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(updateAreaButton))
         .addContainerGap(372, Short.MAX_VALUE))
     );
@@ -367,12 +367,12 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   private javax.swing.JPanel FactionsPanel;
   private javax.swing.JPanel PoliticalPanel;
   private javax.swing.JList<String> areaList;
+  private javax.swing.JScrollPane areaScroll;
+  private javax.swing.JLabel areaTitle;
   private javax.swing.JList<String> armyList;
   private javax.swing.JLabel armyListTitlePanel;
   private javax.swing.JScrollPane armyScroll;
   private javax.swing.JButton expandButton;
-  private javax.swing.JLabel jLabel2;
-  private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JTabbedPane jTabbedPane1;
   private javax.swing.JLabel leninImage;
   private javax.swing.JLabel leninText;
