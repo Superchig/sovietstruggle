@@ -51,7 +51,6 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     armyList = new javax.swing.JList<>();
     armyListTitlePanel = new javax.swing.JLabel();
     expandButton = new javax.swing.JButton();
-    trainButton = new javax.swing.JButton();
     moveButton = new javax.swing.JButton();
     AreaPanel = new javax.swing.JPanel();
     areaTitle = new javax.swing.JLabel();
@@ -100,8 +99,6 @@ public class SovietStruggleGUI extends javax.swing.JFrame
       }
     });
 
-    trainButton.setText("Train");
-
     moveButton.setText("Move");
     moveButton.addActionListener(new java.awt.event.ActionListener()
     {
@@ -130,7 +127,6 @@ public class SovietStruggleGUI extends javax.swing.JFrame
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                   .addComponent(expandButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                  .addComponent(trainButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                   .addComponent(moveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 4, Short.MAX_VALUE)))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -155,15 +151,14 @@ public class SovietStruggleGUI extends javax.swing.JFrame
           .addComponent(leninImage, javax.swing.GroupLayout.Alignment.TRAILING))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(leninText, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(armyScroll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addGroup(PoliticalPanelLayout.createSequentialGroup()
-            .addComponent(expandButton)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(trainButton)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(moveButton)))
-        .addContainerGap(254, Short.MAX_VALUE))
+          .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PoliticalPanelLayout.createSequentialGroup()
+              .addComponent(expandButton)
+              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+              .addComponent(moveButton))
+            .addComponent(leninText, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addContainerGap(265, Short.MAX_VALUE))
     );
 
     jTabbedPane1.addTab("Political", PoliticalPanel);
@@ -460,7 +455,6 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   private javax.swing.JButton moveButton;
   private javax.swing.JLabel polPowDisplay;
   private javax.swing.JLabel polPowLabel;
-  private javax.swing.JButton trainButton;
   private javax.swing.JButton updateAreaButton;
   // End of variables declaration//GEN-END:variables
 }
