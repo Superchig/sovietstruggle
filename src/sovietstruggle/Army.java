@@ -40,6 +40,11 @@ public class Army
 	{
 		return divisions * 5000;
 	}
+
+	public Faction getController()
+	{
+		return controller;
+	}
 	
 	@Override
 	public String toString()
