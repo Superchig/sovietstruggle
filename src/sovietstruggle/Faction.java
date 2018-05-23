@@ -37,6 +37,7 @@ public class Faction
   public Army makeArmy(String n, Area a)
   {
 		Army army = new Army(n, a, this);
+		armies.add(army);
 		a.addArmy(army);
     return army;
   }
