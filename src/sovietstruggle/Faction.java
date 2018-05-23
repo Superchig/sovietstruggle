@@ -18,6 +18,7 @@ public class Faction
   private ArrayList<Area> areas;
   private ArrayList<Army> armies;
   private int politicalPower;
+  private ArrayList<Decision> decisions;
 
   public Faction(String name)
   {
@@ -25,6 +26,7 @@ public class Faction
     areas = new ArrayList<>();
     armies = new ArrayList<>();
     politicalPower = 50;
+    decisions = new ArrayList<>();
   }
 
   public int getPoliticalPower()
@@ -35,6 +37,16 @@ public class Faction
   public void incPolitlcalPower(int power)
   {
     politicalPower += power;
+  }
+  
+  public void addDecision(Decision dec)
+  {
+    decisions.add(dec);
+  }
+  
+  public void addDecision(String name, String desc, Action action)
+  {
+    decisions.add(new Decision(name, desc, action));
   }
   
   public ArrayList<Army> getArmies()

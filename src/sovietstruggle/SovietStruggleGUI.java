@@ -52,6 +52,9 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     armyListTitlePanel = new javax.swing.JLabel();
     expandButton = new javax.swing.JButton();
     moveButton = new javax.swing.JButton();
+    decisionTitle = new javax.swing.JLabel();
+    jScrollPane1 = new javax.swing.JScrollPane();
+    decisionList = new javax.swing.JList<>();
     AreaPanel = new javax.swing.JPanel();
     areaTitle = new javax.swing.JLabel();
     areaScroll = new javax.swing.JScrollPane();
@@ -108,6 +111,12 @@ public class SovietStruggleGUI extends javax.swing.JFrame
       }
     });
 
+    decisionTitle.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+    decisionTitle.setText("Decisions");
+
+    decisionList.setModel(decisionModel);
+    jScrollPane1.setViewportView(decisionList);
+
     javax.swing.GroupLayout PoliticalPanelLayout = new javax.swing.GroupLayout(PoliticalPanel);
     PoliticalPanel.setLayout(PoliticalPanelLayout);
     PoliticalPanelLayout.setHorizontalGroup(
@@ -115,27 +124,34 @@ public class SovietStruggleGUI extends javax.swing.JFrame
       .addGroup(PoliticalPanelLayout.createSequentialGroup()
         .addContainerGap()
         .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(armyListTitlePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
           .addGroup(PoliticalPanelLayout.createSequentialGroup()
             .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(armyListTitlePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
               .addGroup(PoliticalPanelLayout.createSequentialGroup()
-                .addComponent(polPowLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(polPowDisplay))
+                .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                  .addGroup(PoliticalPanelLayout.createSequentialGroup()
+                    .addComponent(polPowLabel)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(polPowDisplay))
+                  .addGroup(PoliticalPanelLayout.createSequentialGroup()
+                    .addComponent(armyScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                      .addComponent(expandButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                      .addComponent(moveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 4, Short.MAX_VALUE)))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addGroup(PoliticalPanelLayout.createSequentialGroup()
-                .addComponent(armyScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                  .addComponent(expandButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                  .addComponent(moveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 4, Short.MAX_VALUE)))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(24, 24, 24)
+                .addComponent(leninImage))
+              .addComponent(leninText, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(450, 450, 450))
           .addGroup(PoliticalPanelLayout.createSequentialGroup()
-            .addGap(24, 24, 24)
-            .addComponent(leninImage))
-          .addComponent(leninText, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addGap(450, 450, 450))
+            .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(decisionTitle)
+              .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
     );
     PoliticalPanelLayout.setVerticalGroup(
       PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,7 +174,11 @@ public class SovietStruggleGUI extends javax.swing.JFrame
               .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
               .addComponent(moveButton))
             .addComponent(leninText, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        .addContainerGap(265, Short.MAX_VALUE))
+        .addGap(18, 18, 18)
+        .addComponent(decisionTitle)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(82, Short.MAX_VALUE))
     );
 
     jTabbedPane1.addTab("Political", PoliticalPanel);
@@ -257,7 +277,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     {
       return;
     }
-    
+
     Army army = armyList.getSelectedValue();
 
     army.moveTo(choice);
@@ -267,14 +287,14 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   private void expandButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_expandButtonActionPerformed
   {//GEN-HEADEREND:event_expandButtonActionPerformed
     String msg = "Divisions to add (1 Division = 5 Political Power):";
-    
+
     String choice = (String) JOptionPane.showInputDialog(this, msg,
             "Add Divisions", JOptionPane.PLAIN_MESSAGE);
     if (choice == null)
     {
       return;
     }
-    
+
     int divs = Integer.parseInt(choice);
     if (divs * 5 > playerFaction.getPoliticalPower())
     {
@@ -283,8 +303,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
               JOptionPane.PLAIN_MESSAGE);
       return;
     }
-    
-    
+
     armyList.getSelectedValue().expand(divs);
     playerFaction.incPolitlcalPower(-(divs * 5));
     updateDisplays();
@@ -349,7 +368,9 @@ public class SovietStruggleGUI extends javax.swing.JFrame
 
     // Create areas
     areas = new ArrayList<>();
-    areas.add(new Area("Moscow", IMG_PATH + "lenin.jpg", playerFaction));
+    Area moscow = new Area("Moscow", IMG_PATH + "lenin.jpg", playerFaction);
+    areas.add(moscow);
+
     areas.add(new Area("West Ukraine", IMG_PATH + "lenin_small.png",
             playerFaction));
 
@@ -372,8 +393,19 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     {
       armyModel.addElement(a);
     }
+
+    // Create decisions
+    Decision dissolve = new Decision("Dissolve the Russian Constituent Assembly!",
+            "The soviets represent the true will of the people! This bourgeois \"democracy\" cannot be allowed to continue.",
+            (player) ->
+    {
+      player.incPolitlcalPower(100);
+    });
+    playerFaction.addDecision(dissolve);
+    
+    decisionModel = new DefaultListModel<>();
   }
-  
+
   private void updateDisplays()
   {
     updateAreaList();
@@ -389,7 +421,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
       areaModel.addElement(a);
     }
   }
-  
+
   private void updateArmyList()
   {
     armyModel.clear();
@@ -398,7 +430,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
       armyModel.addElement(a);
     }
   }
-  
+
   private void updatePolPowDisplay()
   {
     polPowDisplay.setText("" + playerFaction.getPoliticalPower());
@@ -434,6 +466,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   private DefaultListModel<Area> areaModel;
   // Use parallel arrays structure with playerFaction.armies and armyModel
   private DefaultListModel<Army> armyModel;
+  private DefaultListModel<Decision> decisionModel;
 
   private Faction playerFaction;
   private ArrayList<Faction> enemyFactions;
@@ -448,7 +481,10 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   private javax.swing.JList<Army> armyList;
   private javax.swing.JLabel armyListTitlePanel;
   private javax.swing.JScrollPane armyScroll;
+  private javax.swing.JList<Decision> decisionList;
+  private javax.swing.JLabel decisionTitle;
   private javax.swing.JButton expandButton;
+  private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JTabbedPane jTabbedPane1;
   private javax.swing.JLabel leninImage;
   private javax.swing.JLabel leninText;
