@@ -97,6 +97,13 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     trainButton.setText("Train");
 
     moveButton.setText("Move");
+    moveButton.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
+        moveButtonActionPerformed(evt);
+      }
+    });
 
     javax.swing.GroupLayout PoliticalPanelLayout = new javax.swing.GroupLayout(PoliticalPanel);
     PoliticalPanel.setLayout(PoliticalPanelLayout);
@@ -238,6 +245,16 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     updateAreaList();
   }//GEN-LAST:event_updateAreaButtonActionPerformed
 
+  private void moveButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_moveButtonActionPerformed
+  {//GEN-HEADEREND:event_moveButtonActionPerformed
+    Area choice = (Area) JOptionPane.showInputDialog(this,
+						"Where do you want to move this army to?",
+						"Move Army", JOptionPane.PLAIN_MESSAGE, null,
+						areas.toArray(), "Choose!");
+		
+		//Army army = armyList.getSelectedValue();
+  }//GEN-LAST:event_moveButtonActionPerformed
+
   /**
    * @param args the command line arguments
    */
@@ -303,7 +320,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     areaModel = new DefaultListModel<>();
     for (Area a : areas)
     {
-      areaModel.addElement(a.toString());
+      areaModel.addElement(a);
     }
     
 		// Create factions
@@ -315,7 +332,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
 		armyModel = new DefaultListModel<>();
 		for (Army a : playerFaction.getArmies())
 		{
-			armyModel.addElement(a.toString());
+			armyModel.addElement(a);
 		}
   }
 	
@@ -324,7 +341,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
 		areaModel.clear();
     for (Area a : areas)
     {
-      areaModel.addElement(a.toString());
+      areaModel.addElement(a);
     }
 	}
 	
@@ -355,9 +372,9 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   // Use parallel arrays structure with areas and areaModel
   private ArrayList<Area> areas;
 	// Assigned as areaList's model in NetBeans Design section
-  private DefaultListModel<String> areaModel;
+  private DefaultListModel<Area> areaModel;
 	// Use parallel arrays structure with playerFaction.armies and armyModel
-	private DefaultListModel<String> armyModel;
+	private DefaultListModel<Army> armyModel;
   
   private Faction playerFaction;
   private ArrayList<Faction> enemyFactions;
@@ -366,10 +383,10 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   private javax.swing.JPanel AreaPanel;
   private javax.swing.JPanel FactionsPanel;
   private javax.swing.JPanel PoliticalPanel;
-  private javax.swing.JList<String> areaList;
+  private javax.swing.JList<Area> areaList;
   private javax.swing.JScrollPane areaScroll;
   private javax.swing.JLabel areaTitle;
-  private javax.swing.JList<String> armyList;
+  private javax.swing.JList<Army> armyList;
   private javax.swing.JLabel armyListTitlePanel;
   private javax.swing.JScrollPane armyScroll;
   private javax.swing.JButton expandButton;
