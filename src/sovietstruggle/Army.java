@@ -14,19 +14,37 @@ public class Army
   private String name;
   private Area area;
   private Faction controller;
-  private int manpower;
+  private int divisions;
   
   public Army(String name, Area area, Faction controller)
   {
     this.name = name;
     this.area = area;
     this.controller = controller;
-    manpower = 1000;
+    divisions = 1;
   }
 	
+	// Returns previous Area
+	public Area moveTo(Area newArea)
+	{
+		Area oldArea = area;
+		
+		area.removeArmy(this);
+		newArea.addArmy(this);
+		area = newArea;
+		
+		return oldArea;
+	}
+	
+	public int getManpower()
+	{
+		return divisions * 5000;
+	}
+	
+	@Override
 	public String toString()
 	{
 		return area.getName() + TextFormat.spaces(13) + name + TextFormat.spaces(13)
-						+ TextFormat.normNumFormat(manpower);
+						+ TextFormat.normNumFormat(getManpower());
 	}
 }

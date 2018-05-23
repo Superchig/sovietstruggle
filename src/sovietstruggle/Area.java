@@ -38,6 +38,11 @@ public class Area
   {
     armies.add(a);
   }
+	
+	public void removeArmy(Army a)
+	{
+		armies.remove(a);
+	}
 
   public String getName()
   {
