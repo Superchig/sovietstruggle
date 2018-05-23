@@ -18,37 +18,37 @@ import java.text.NumberFormat;
 public class TextFormat
 {
 
-	private static NumberFormat fmt = NumberFormat.getNumberInstance();
+  private static NumberFormat fmt = NumberFormat.getNumberInstance();
 
-	public static String spaces(int numSpaces)
-	{
-		String result = "";
+  public static String spaces(int numSpaces)
+  {
+    String result = "";
 
-		for (int i = 0; i < numSpaces; i++)
-		{
-			result += " ";
-		}
+    for (int i = 0; i < numSpaces; i++)
+    {
+      result += " ";
+    }
 
-		return result;
-	}
+    return result;
+  }
 
-	public static String normNumFormat(int num)
-	{
-		return fmt.format(num);
-	}
+  public static String normNumFormat(int num)
+  {
+    return fmt.format(num);
+  }
 
-	public static String readFile(String path)
-	{
-		try
-		{
-			byte[] encoded = Files.readAllBytes(Paths.get(path));
-			return new String(encoded, Charset.defaultCharset())
-							.replace("\n\n", "rEaN").replace("\n", " ")
-							.replace("rEaN", "\n\n");
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-			return "Error In Reading File";
-		}
-	}
+  public static String readFile(String path)
+  {
+    try
+    {
+      byte[] encoded = Files.readAllBytes(Paths.get(path));
+      return new String(encoded, Charset.defaultCharset())
+              .replace("\n\n", "rEaN").replace("\n", " ")
+              .replace("rEaN", "\n\n");
+    } catch (IOException e)
+    {
+      e.printStackTrace();
+      return "Error In Reading File";
+    }
+  }
 }

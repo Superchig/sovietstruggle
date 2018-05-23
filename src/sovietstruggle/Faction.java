@@ -13,10 +13,11 @@ import java.util.ArrayList;
  */
 public class Faction
 {
+
   private String name;
   private ArrayList<Area> areas;
   private ArrayList<Army> armies;
-  
+
   public Faction(String name)
   {
     this.name = name;
@@ -24,21 +25,21 @@ public class Faction
     armies = new ArrayList<>();
   }
 
-	public ArrayList<Army> getArmies()
-	{
-		return armies;
-	}
-  
+  public ArrayList<Army> getArmies()
+  {
+    return armies;
+  }
+
   public void addArmy(Army a)
   {
     armies.add(a);
   }
-  
+
   public Army makeArmy(String n, Area a)
   {
-		Army army = new Army(n, a, this);
-		armies.add(army);
-		a.addArmy(army);
+    Army army = new Army(n, a, this);
+    armies.add(army);
+    a.addArmy(army);
     return army;
   }
 }

@@ -18,29 +18,30 @@ import javax.swing.JList;
  */
 public class AreaListRenderer extends DefaultListCellRenderer
 {
-	// Equal to SovietStruggleGUI's areas
-	private ArrayList<Area> areas;
-	private Font font = new Font("Monospaced", Font.PLAIN, 16);
+  // Equal to SovietStruggleGUI's areas
 
-	public AreaListRenderer(ArrayList<Area> areas)
-	{
-		super();
-		
-		this.areas = areas;
-	}
-	
-	@Override
-	public Component getListCellRendererComponent(
-					JList list, Object value, int index,
-					boolean isSelected, boolean cellHasFocus)
-	{
+  private ArrayList<Area> areas;
+  private Font font = new Font("Monospaced", Font.PLAIN, 16);
 
-		JLabel label = (JLabel) super.getListCellRendererComponent(
-						list, value, index, isSelected, cellHasFocus);
-		label.setIcon(areas.get(index).getImage());
-		label.setHorizontalTextPosition(JLabel.CENTER);
-		label.setVerticalTextPosition(JLabel.BOTTOM);
-		label.setFont(font);
-		return label;
-	}
+  public AreaListRenderer(ArrayList<Area> areas)
+  {
+    super();
+
+    this.areas = areas;
+  }
+
+  @Override
+  public Component getListCellRendererComponent(
+          JList list, Object value, int index,
+          boolean isSelected, boolean cellHasFocus)
+  {
+
+    JLabel label = (JLabel) super.getListCellRendererComponent(
+            list, value, index, isSelected, cellHasFocus);
+    label.setIcon(areas.get(index).getImage());
+    label.setHorizontalTextPosition(JLabel.CENTER);
+    label.setVerticalTextPosition(JLabel.BOTTOM);
+    label.setFont(font);
+    return label;
+  }
 }

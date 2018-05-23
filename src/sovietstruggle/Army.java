@@ -11,11 +11,12 @@ package sovietstruggle;
  */
 public class Army
 {
+
   private String name;
   private Area area;
   private Faction controller;
   private int divisions;
-  
+
   public Army(String name, Area area, Faction controller)
   {
     this.name = name;
@@ -23,33 +24,33 @@ public class Army
     this.controller = controller;
     divisions = 1;
   }
-	
-	// Returns previous Area
-	public Area moveTo(Area newArea)
-	{
-		Area oldArea = area;
-		
-		area.removeArmy(this);
-		newArea.addArmy(this);
-		area = newArea;
-		
-		return oldArea;
-	}
-	
-	public int getManpower()
-	{
-		return divisions * 5000;
-	}
 
-	public Faction getController()
-	{
-		return controller;
-	}
-	
-	@Override
-	public String toString()
-	{
-		return area.getName() + TextFormat.spaces(13) + name + TextFormat.spaces(13)
-						+ TextFormat.normNumFormat(getManpower());
-	}
+  // Returns previous Area
+  public Area moveTo(Area newArea)
+  {
+    Area oldArea = area;
+
+    area.removeArmy(this);
+    newArea.addArmy(this);
+    area = newArea;
+
+    return oldArea;
+  }
+
+  public int getManpower()
+  {
+    return divisions * 5000;
+  }
+
+  public Faction getController()
+  {
+    return controller;
+  }
+
+  @Override
+  public String toString()
+  {
+    return area.getName() + TextFormat.spaces(13) + name + TextFormat.spaces(13)
+            + TextFormat.normNumFormat(getManpower());
+  }
 }
