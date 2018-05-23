@@ -62,7 +62,6 @@ public class SovietStruggleGUI extends javax.swing.JFrame
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setTitle("Soviet Struggle");
-    setPreferredSize(new java.awt.Dimension(650, 600));
     setResizable(false);
 
     jTabbedPane1.setMaximumSize(new java.awt.Dimension(1000, 1000));
@@ -77,7 +76,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     polPowLabel.setText("Political Power:");
 
     polPowDisplay.setFont(new java.awt.Font("Cantarell", 0, 24)); // NOI18N
-    polPowDisplay.setText("jLabel1");
+    polPowDisplay.setText("" + playerFaction.getPoliticalPower());
 
     leninImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sovietstruggle/img/lenin_small.png"))); // NOI18N
     leninImage.setToolTipText("One man, one vote. He is the man, he gets the vote.");
@@ -93,6 +92,13 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     armyListTitlePanel.setText("The Red Army");
 
     expandButton.setText("Expand Size");
+    expandButton.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
+        expandButtonActionPerformed(evt);
+      }
+    });
 
     trainButton.setText("Train");
 
@@ -126,7 +132,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
                   .addComponent(expandButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                   .addComponent(trainButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                   .addComponent(moveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 4, Short.MAX_VALUE)))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(PoliticalPanelLayout.createSequentialGroup()
@@ -192,7 +198,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
             .addComponent(areaScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(updateAreaButton)))
-        .addContainerGap(159, Short.MAX_VALUE))
+        .addContainerGap(180, Short.MAX_VALUE))
     );
     AreaPanelLayout.setVerticalGroup(
       AreaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -212,7 +218,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     FactionsPanel.setLayout(FactionsPanelLayout);
     FactionsPanelLayout.setHorizontalGroup(
       FactionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 740, Short.MAX_VALUE)
+      .addGap(0, 755, Short.MAX_VALUE)
     );
     FactionsPanelLayout.setVerticalGroup(
       FactionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,7 +266,34 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     Army army = armyList.getSelectedValue();
 
     army.moveTo(choice);
+    updateDisplays();
   }//GEN-LAST:event_moveButtonActionPerformed
+
+  private void expandButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_expandButtonActionPerformed
+  {//GEN-HEADEREND:event_expandButtonActionPerformed
+    String msg = "Divisions to add (1 Division = 5 Political Power):";
+    
+    String choice = (String) JOptionPane.showInputDialog(this, msg,
+            "Add Divisions", JOptionPane.PLAIN_MESSAGE);
+    if (choice == null)
+    {
+      return;
+    }
+    
+    int divs = Integer.parseInt(choice);
+    if (divs * 5 > playerFaction.getPoliticalPower())
+    {
+      String rejectedMsg = "That requires " + divs * 5 + " political power, which is more than you have.";
+      JOptionPane.showMessageDialog(this, rejectedMsg, "Could Not Expand Army",
+              JOptionPane.PLAIN_MESSAGE);
+      return;
+    }
+    
+    
+    armyList.getSelectedValue().expand(divs);
+    playerFaction.incPolitlcalPower(-(divs * 5));
+    updateDisplays();
+  }//GEN-LAST:event_expandButtonActionPerformed
 
   /**
    * @param args the command line arguments
@@ -345,6 +378,13 @@ public class SovietStruggleGUI extends javax.swing.JFrame
       armyModel.addElement(a);
     }
   }
+  
+  private void updateDisplays()
+  {
+    updateAreaList();
+    updateArmyList();
+    updatePolPowDisplay();
+  }
 
   private void updateAreaList()
   {
@@ -353,6 +393,20 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     {
       areaModel.addElement(a);
     }
+  }
+  
+  private void updateArmyList()
+  {
+    armyModel.clear();
+    for (Army a : playerFaction.getArmies())
+    {
+      armyModel.addElement(a);
+    }
+  }
+  
+  private void updatePolPowDisplay()
+  {
+    polPowDisplay.setText("" + playerFaction.getPoliticalPower());
   }
 
   private void showPlainDialog(String text, String title)

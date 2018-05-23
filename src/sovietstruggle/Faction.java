@@ -17,14 +17,26 @@ public class Faction
   private String name;
   private ArrayList<Area> areas;
   private ArrayList<Army> armies;
+  private int politicalPower;
 
   public Faction(String name)
   {
     this.name = name;
     areas = new ArrayList<>();
     armies = new ArrayList<>();
+    politicalPower = 50;
   }
 
+  public int getPoliticalPower()
+  {
+    return politicalPower;
+  }
+  
+  public void incPolitlcalPower(int power)
+  {
+    politicalPower += power;
+  }
+  
   public ArrayList<Army> getArmies()
   {
     return armies;

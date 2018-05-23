@@ -36,6 +36,11 @@ public class Army
 
     return oldArea;
   }
+  
+  public void expand(int numDivs)
+  {
+    divisions += numDivs;
+  }
 
   public int getManpower()
   {
