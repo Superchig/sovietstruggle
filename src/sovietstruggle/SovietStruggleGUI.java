@@ -252,6 +252,11 @@ public class SovietStruggleGUI extends javax.swing.JFrame
             "Move Army", JOptionPane.PLAIN_MESSAGE, null,
             areas.toArray(), "Choose!");
 
+    if (choice == null)
+    {
+      return;
+    }
+    
     Army army = armyList.getSelectedValue();
 
     army.moveTo(choice);
