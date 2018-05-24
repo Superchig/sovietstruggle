@@ -54,6 +54,11 @@ public class Faction
     return armies;
   }
 
+  public ArrayList<Decision> getDecisions()
+  {
+    return decisions;
+  }
+
   public void addArmy(Army a)
   {
     armies.add(a);

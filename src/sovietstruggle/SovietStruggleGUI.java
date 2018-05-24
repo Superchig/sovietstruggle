@@ -404,6 +404,10 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     playerFaction.addDecision(dissolve);
     
     decisionModel = new DefaultListModel<>();
+    for (Decision dec : playerFaction.getDecisions())
+    {
+      decisionModel.addElement(dec);
+    }
   }
 
   private void updateDisplays()
