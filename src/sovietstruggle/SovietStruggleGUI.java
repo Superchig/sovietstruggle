@@ -6,6 +6,7 @@
 package sovietstruggle;
 
 import java.awt.AWTEvent;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,7 +14,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -64,8 +67,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     expandButton = new javax.swing.JButton();
     moveButton = new javax.swing.JButton();
     decisionTitle = new javax.swing.JLabel();
-    jScrollPane1 = new javax.swing.JScrollPane();
-    decisionList = new javax.swing.JList<>();
+    decisionArea = new javax.swing.JPanel();
     AreaPanel = new javax.swing.JPanel();
     areaTitle = new javax.swing.JLabel();
     areaScroll = new javax.swing.JScrollPane();
@@ -146,8 +148,30 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     decisionTitle.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
     decisionTitle.setText("Decisions");
 
-    decisionList.setModel(decisionModel);
-    jScrollPane1.setViewportView(decisionList);
+    decisionArea.addMouseListener(new java.awt.event.MouseAdapter()
+    {
+      public void mouseClicked(java.awt.event.MouseEvent evt)
+      {
+        decisionAreaMouseClicked(evt);
+      }
+      public void mouseEntered(java.awt.event.MouseEvent evt)
+      {
+        decisionAreaMouseEntered(evt);
+      }
+    });
+
+    javax.swing.GroupLayout decisionAreaLayout = new javax.swing.GroupLayout(decisionArea);
+    decisionArea.setLayout(decisionAreaLayout);
+    decisionAreaLayout.setHorizontalGroup(
+      decisionAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 354, Short.MAX_VALUE)
+    );
+    decisionAreaLayout.setVerticalGroup(
+      decisionAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 201, Short.MAX_VALUE)
+    );
+
+    updateDecisionArea();
 
     javax.swing.GroupLayout PoliticalPanelLayout = new javax.swing.GroupLayout(PoliticalPanel);
     PoliticalPanel.setLayout(PoliticalPanelLayout);
@@ -180,10 +204,11 @@ public class SovietStruggleGUI extends javax.swing.JFrame
               .addComponent(leninText, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGap(450, 450, 450))
           .addGroup(PoliticalPanelLayout.createSequentialGroup()
-            .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(decisionTitle)
-              .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addComponent(decisionTitle)
+            .addContainerGap(949, Short.MAX_VALUE))
+          .addGroup(PoliticalPanelLayout.createSequentialGroup()
+            .addComponent(decisionArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(0, 0, Short.MAX_VALUE))))
     );
     PoliticalPanelLayout.setVerticalGroup(
       PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,8 +234,8 @@ public class SovietStruggleGUI extends javax.swing.JFrame
         .addGap(18, 18, 18)
         .addComponent(decisionTitle)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(82, Short.MAX_VALUE))
+        .addComponent(decisionArea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addContainerGap())
     );
 
     jTabbedPane1.addTab("Political", PoliticalPanel);
@@ -287,7 +312,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addContainerGap(75, Short.MAX_VALUE))
     );
 
     pack();
@@ -367,6 +392,16 @@ public class SovietStruggleGUI extends javax.swing.JFrame
 
     armyList.getSelectedValue().setName(choice);
   }//GEN-LAST:event_renameArmyActionPerformed
+
+  private void decisionAreaMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_decisionAreaMouseClicked
+  {//GEN-HEADEREND:event_decisionAreaMouseClicked
+    updateDisplays();
+  }//GEN-LAST:event_decisionAreaMouseClicked
+
+  private void decisionAreaMouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_decisionAreaMouseEntered
+  {//GEN-HEADEREND:event_decisionAreaMouseEntered
+    updateDisplays();
+  }//GEN-LAST:event_decisionAreaMouseEntered
 
   /**
    * @param args the command line arguments
@@ -456,23 +491,25 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     // Create decisions
     Decision dissolve = new Decision("Dissolve the Russian Constituent Assembly!",
             "The soviets represent the true will of the people! This bourgeois \"democracy\" cannot be allowed to continue.",
+            playerFaction,
             (player) ->
     {
       player.incPolitlcalPower(100);
     });
     playerFaction.addDecision(dissolve);
 
-    decisionModel = new DefaultListModel<>();
-    for (Decision dec : playerFaction.getDecisions())
+    playerFaction.addDecision("Expand the Cheka", "The security of a liberated proletariat must be ensured!",
+            (player) ->
     {
-      decisionModel.addElement(dec);
-    }
+      player.makeArmy("Militant Cheka", moscow);
+    });
   }
 
   private void updateDisplays()
   {
     updateAreaList();
     updateArmyList();
+    updateDecisionArea();
     updatePolPowDisplay();
   }
 
@@ -492,6 +529,22 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     {
       armyModel.addElement(a);
     }
+  }
+
+  private void updateDecisionArea()
+  {
+    decisionArea.setLayout(new BoxLayout(decisionArea, BoxLayout.PAGE_AXIS));
+    decisionArea.removeAll();
+    for (Decision dec : playerFaction.getDecisions())
+    {
+      if (!dec.isTaken())
+      {
+        decisionArea.add(new DecisionPanel(dec));
+      }
+    }
+    
+    decisionArea.revalidate();
+    decisionArea.repaint();
   }
 
   private void updatePolPowDisplay()
@@ -534,7 +587,6 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   private DefaultListModel<Area> areaModel;
   // Use parallel arrays structure with playerFaction.armies and armyModel
   private DefaultListModel<Army> armyModel;
-  private DefaultListModel<Decision> decisionModel;
 
   private Faction playerFaction;
   private ArrayList<Faction> enemyFactions;
@@ -550,10 +602,9 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   private javax.swing.JPopupMenu armyListMenu;
   private javax.swing.JLabel armyListTitlePanel;
   private javax.swing.JScrollPane armyScroll;
-  private javax.swing.JList<Decision> decisionList;
+  private javax.swing.JPanel decisionArea;
   private javax.swing.JLabel decisionTitle;
   private javax.swing.JButton expandButton;
-  private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JTabbedPane jTabbedPane1;
   private javax.swing.JLabel leninImage;
   private javax.swing.JLabel leninText;

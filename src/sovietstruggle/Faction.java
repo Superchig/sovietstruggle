@@ -46,7 +46,7 @@ public class Faction
   
   public void addDecision(String name, String desc, Action action)
   {
-    decisions.add(new Decision(name, desc, action));
+    decisions.add(new Decision(name, desc, this, action));
   }
   
   public ArrayList<Army> getArmies()
