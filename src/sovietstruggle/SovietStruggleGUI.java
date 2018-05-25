@@ -343,35 +343,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
 
   private void armyListMousePressed(java.awt.event.MouseEvent evt)//GEN-FIRST:event_armyListMousePressed
   {//GEN-HEADEREND:event_armyListMousePressed
-//    if (!SwingUtilities.isRightMouseButton(evt))
-//    {
-//      return;
-//    }
-//    System.out.println("Right mouse clicked!");
-//    
-//    JPopupMenu menu = new JPopupMenu("Drop-Down");
-//    menu.getAccessibleContext().setAccessibleDescription("A drop-down menu for armies.");
-//    
-//    JMenuItem rename = new JMenuItem("Rename", KeyEvent.VK_R);
-//    rename.addActionListener(new ActionListener()
-//    {
-//      @Override
-//      public void actionPerformed(ActionEvent ae)
-//      {
-//        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//        String choice = (String) JOptionPane.showInputDialog(null, "Rename Army", "Rename:", JOptionPane.PLAIN_MESSAGE);
-//        if (choice == null)
-//        {
-//          return;
-//        }
-//        
-//        armyList.getSelectedValue().setName(choice);
-//      }
-//    });
-//    
-//    menu.setVisible(true);
-
-    if (evt.isPopupTrigger())
+    if (evt.isPopupTrigger() && armyList.getSelectedValue() != null)
     {
       showRenameArmyMenu(evt);
     }
@@ -379,7 +351,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
 
   private void armyListMouseReleased(java.awt.event.MouseEvent evt)//GEN-FIRST:event_armyListMouseReleased
   {//GEN-HEADEREND:event_armyListMouseReleased
-    if (evt.isPopupTrigger())
+    if (evt.isPopupTrigger() && armyList.getSelectedValue() != null)
     {
       showRenameArmyMenu(evt);
     }
@@ -548,7 +520,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
 
   private void showRenameArmyMenu(MouseEvent evt)
   {
-    armyListMenu.show(this, evt.getXOnScreen(), evt.getYOnScreen());
+    armyListMenu.show(this, evt.getX() + 20, evt.getY() + 155);
   }
 
   // Custom variables declaration
