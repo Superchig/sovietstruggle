@@ -5,13 +5,22 @@
  */
 package sovietstruggle;
 
+import java.awt.AWTEvent;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -41,6 +50,8 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   private void initComponents()
   {
 
+    armyListMenu = new javax.swing.JPopupMenu();
+    renameArmy = new javax.swing.JMenuItem();
     jTabbedPane1 = new javax.swing.JTabbedPane();
     PoliticalPanel = new javax.swing.JPanel();
     polPowLabel = new javax.swing.JLabel();
@@ -61,6 +72,16 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     areaList = new javax.swing.JList<>();
     updateAreaButton = new javax.swing.JButton();
     FactionsPanel = new javax.swing.JPanel();
+
+    renameArmy.setText("Rename");
+    renameArmy.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
+        renameArmyActionPerformed(evt);
+      }
+    });
+    armyListMenu.add(renameArmy);
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setTitle("Soviet Struggle");
@@ -88,6 +109,17 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     leninText.setFocusable(false);
 
     armyList.setModel(armyModel);
+    armyList.addMouseListener(new java.awt.event.MouseAdapter()
+    {
+      public void mousePressed(java.awt.event.MouseEvent evt)
+      {
+        armyListMousePressed(evt);
+      }
+      public void mouseReleased(java.awt.event.MouseEvent evt)
+      {
+        armyListMouseReleased(evt);
+      }
+    });
     armyScroll.setViewportView(armyList);
 
     armyListTitlePanel.setFont(new java.awt.Font("Cantarell", 0, 24)); // NOI18N
@@ -309,6 +341,61 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     updateDisplays();
   }//GEN-LAST:event_expandButtonActionPerformed
 
+  private void armyListMousePressed(java.awt.event.MouseEvent evt)//GEN-FIRST:event_armyListMousePressed
+  {//GEN-HEADEREND:event_armyListMousePressed
+//    if (!SwingUtilities.isRightMouseButton(evt))
+//    {
+//      return;
+//    }
+//    System.out.println("Right mouse clicked!");
+//    
+//    JPopupMenu menu = new JPopupMenu("Drop-Down");
+//    menu.getAccessibleContext().setAccessibleDescription("A drop-down menu for armies.");
+//    
+//    JMenuItem rename = new JMenuItem("Rename", KeyEvent.VK_R);
+//    rename.addActionListener(new ActionListener()
+//    {
+//      @Override
+//      public void actionPerformed(ActionEvent ae)
+//      {
+//        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//        String choice = (String) JOptionPane.showInputDialog(null, "Rename Army", "Rename:", JOptionPane.PLAIN_MESSAGE);
+//        if (choice == null)
+//        {
+//          return;
+//        }
+//        
+//        armyList.getSelectedValue().setName(choice);
+//      }
+//    });
+//    
+//    menu.setVisible(true);
+
+    if (evt.isPopupTrigger())
+    {
+      showRenameArmyMenu(evt);
+    }
+  }//GEN-LAST:event_armyListMousePressed
+
+  private void armyListMouseReleased(java.awt.event.MouseEvent evt)//GEN-FIRST:event_armyListMouseReleased
+  {//GEN-HEADEREND:event_armyListMouseReleased
+    if (evt.isPopupTrigger())
+    {
+      showRenameArmyMenu(evt);
+    }
+  }//GEN-LAST:event_armyListMouseReleased
+
+  private void renameArmyActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_renameArmyActionPerformed
+  {//GEN-HEADEREND:event_renameArmyActionPerformed
+    String choice = (String) JOptionPane.showInputDialog(null, "Rename Army", "Rename:", JOptionPane.PLAIN_MESSAGE);
+    if (choice == null)
+    {
+      return;
+    }
+
+    armyList.getSelectedValue().setName(choice);
+  }//GEN-LAST:event_renameArmyActionPerformed
+
   /**
    * @param args the command line arguments
    */
@@ -402,7 +489,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
       player.incPolitlcalPower(100);
     });
     playerFaction.addDecision(dissolve);
-    
+
     decisionModel = new DefaultListModel<>();
     for (Decision dec : playerFaction.getDecisions())
     {
@@ -459,6 +546,11 @@ public class SovietStruggleGUI extends javax.swing.JFrame
             JOptionPane.PLAIN_MESSAGE);
   }
 
+  private void showRenameArmyMenu(MouseEvent evt)
+  {
+    armyListMenu.show(this, evt.getXOnScreen(), evt.getYOnScreen());
+  }
+
   // Custom variables declaration
   private static final String IMG_PATH = "src/sovietstruggle/img/";
   private static final String TEXT_PATH = "src/sovietstruggle/text/";
@@ -483,6 +575,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   private javax.swing.JScrollPane areaScroll;
   private javax.swing.JLabel areaTitle;
   private javax.swing.JList<Army> armyList;
+  private javax.swing.JPopupMenu armyListMenu;
   private javax.swing.JLabel armyListTitlePanel;
   private javax.swing.JScrollPane armyScroll;
   private javax.swing.JList<Decision> decisionList;
@@ -495,6 +588,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   private javax.swing.JButton moveButton;
   private javax.swing.JLabel polPowDisplay;
   private javax.swing.JLabel polPowLabel;
+  private javax.swing.JMenuItem renameArmy;
   private javax.swing.JButton updateAreaButton;
   // End of variables declaration//GEN-END:variables
 }
