@@ -5,25 +5,18 @@
  */
 package sovietstruggle;
 
-import java.awt.AWTEvent;
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
 
 /**
  *
@@ -69,6 +62,8 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     decisionTitle = new javax.swing.JLabel();
     decisionArea = new javax.swing.JPanel();
     endTurnButton = new javax.swing.JButton();
+    turnLabel = new javax.swing.JLabel();
+    calendarDateLabel = new javax.swing.JLabel();
     AreaPanel = new javax.swing.JPanel();
     areaTitle = new javax.swing.JLabel();
     areaScroll = new javax.swing.JScrollPane();
@@ -149,11 +144,22 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     decisionTitle.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
     decisionTitle.setText("Decisions");
 
+    decisionArea.addMouseMotionListener(new java.awt.event.MouseMotionAdapter()
+    {
+      public void mouseMoved(java.awt.event.MouseEvent evt)
+      {
+        decisionAreaMouseMoved(evt);
+      }
+    });
     decisionArea.addMouseListener(new java.awt.event.MouseAdapter()
     {
       public void mouseClicked(java.awt.event.MouseEvent evt)
       {
         decisionAreaMouseClicked(evt);
+      }
+      public void mouseExited(java.awt.event.MouseEvent evt)
+      {
+        decisionAreaMouseExited(evt);
       }
       public void mouseEntered(java.awt.event.MouseEvent evt)
       {
@@ -169,163 +175,182 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     );
     decisionAreaLayout.setVerticalGroup(
       decisionAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 201, Short.MAX_VALUE)
+      .addGap(0, 189, Short.MAX_VALUE)
     );
 
     updateDecisionArea();
 
     endTurnButton.setText("End Turn");
-
-    javax.swing.GroupLayout PoliticalPanelLayout = new javax.swing.GroupLayout(PoliticalPanel);
-    PoliticalPanel.setLayout(PoliticalPanelLayout);
-    PoliticalPanelLayout.setHorizontalGroup(
-      PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(PoliticalPanelLayout.createSequentialGroup()
-        .addContainerGap()
-        .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(PoliticalPanelLayout.createSequentialGroup()
-            .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(armyListTitlePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .addGroup(PoliticalPanelLayout.createSequentialGroup()
-                .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                  .addGroup(PoliticalPanelLayout.createSequentialGroup()
-                    .addComponent(polPowLabel)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(polPowDisplay))
-                  .addGroup(PoliticalPanelLayout.createSequentialGroup()
-                    .addComponent(armyScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                      .addComponent(expandButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                      .addComponent(moveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 4, Short.MAX_VALUE)))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addGroup(PoliticalPanelLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(leninImage))
-              .addComponent(leninText, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(450, 450, 450))
-          .addGroup(PoliticalPanelLayout.createSequentialGroup()
-            .addComponent(decisionTitle)
-            .addContainerGap(949, Short.MAX_VALUE))
-          .addGroup(PoliticalPanelLayout.createSequentialGroup()
-            .addComponent(decisionArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(endTurnButton)
-            .addGap(497, 497, 497))))
-    );
-    PoliticalPanelLayout.setVerticalGroup(
-      PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(PoliticalPanelLayout.createSequentialGroup()
-        .addContainerGap()
-        .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PoliticalPanelLayout.createSequentialGroup()
-            .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-              .addComponent(polPowLabel)
-              .addComponent(polPowDisplay))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(armyListTitlePanel))
-          .addComponent(leninImage, javax.swing.GroupLayout.Alignment.TRAILING))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(armyScroll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PoliticalPanelLayout.createSequentialGroup()
-              .addComponent(expandButton)
-              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-              .addComponent(moveButton))
-            .addComponent(leninText, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        .addGap(18, 18, 18)
-        .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(PoliticalPanelLayout.createSequentialGroup()
-            .addComponent(decisionTitle)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(decisionArea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-          .addGroup(PoliticalPanelLayout.createSequentialGroup()
-            .addGap(0, 0, Short.MAX_VALUE)
-            .addComponent(endTurnButton)))
-        .addContainerGap())
-    );
-
-    jTabbedPane1.addTab("Political", PoliticalPanel);
-
-    areaTitle.setFont(new java.awt.Font("Cantarell", 0, 24)); // NOI18N
-    areaTitle.setText("Area List");
-
-    areaList.setModel(areaModel);
-    areaList.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-    areaList.setVisibleRowCount(4);
-    areaList.setCellRenderer(new AreaListRenderer(areas));
-    areaScroll.setViewportView(areaList);
-
-    updateAreaButton.setText("Update Areas");
-    updateAreaButton.addActionListener(new java.awt.event.ActionListener()
+    endTurnButton.addActionListener(new java.awt.event.ActionListener()
     {
       public void actionPerformed(java.awt.event.ActionEvent evt)
       {
-        updateAreaButtonActionPerformed(evt);
+        endTurnButtonActionPerformed(evt);
       }
     });
 
-    javax.swing.GroupLayout AreaPanelLayout = new javax.swing.GroupLayout(AreaPanel);
-    AreaPanel.setLayout(AreaPanelLayout);
-    AreaPanelLayout.setHorizontalGroup(
-      AreaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(AreaPanelLayout.createSequentialGroup()
-        .addContainerGap()
-        .addGroup(AreaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(areaTitle)
-          .addGroup(AreaPanelLayout.createSequentialGroup()
-            .addComponent(areaScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
+    turnLabel.setText("Turn 1");
+
+    calendarDateLabel.setText(calendarDate.getDisplayName(Calendar.MONTH,
+      Calendar.SHORT, Locale.ENGLISH) + " "
+    + calendarDate.get(Calendar.YEAR));
+
+  javax.swing.GroupLayout PoliticalPanelLayout = new javax.swing.GroupLayout(PoliticalPanel);
+  PoliticalPanel.setLayout(PoliticalPanelLayout);
+  PoliticalPanelLayout.setHorizontalGroup(
+    PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    .addGroup(PoliticalPanelLayout.createSequentialGroup()
+      .addContainerGap()
+      .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(PoliticalPanelLayout.createSequentialGroup()
+          .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(armyListTitlePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(PoliticalPanelLayout.createSequentialGroup()
+              .addComponent(armyScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+              .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(expandButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(moveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE))
+            .addGroup(PoliticalPanelLayout.createSequentialGroup()
+              .addComponent(polPowLabel)
+              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+              .addComponent(polPowDisplay)
+              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+              .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(calendarDateLabel)
+                .addComponent(turnLabel))))
+          .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+          .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PoliticalPanelLayout.createSequentialGroup()
+              .addGap(47, 47, 47)
+              .addComponent(leninImage))
+            .addComponent(leninText, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGap(450, 450, 450))
+        .addGroup(PoliticalPanelLayout.createSequentialGroup()
+          .addComponent(decisionTitle)
+          .addContainerGap(946, Short.MAX_VALUE))
+        .addGroup(PoliticalPanelLayout.createSequentialGroup()
+          .addComponent(decisionArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addComponent(endTurnButton)
+          .addGap(497, 497, 497))))
+  );
+  PoliticalPanelLayout.setVerticalGroup(
+    PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    .addGroup(PoliticalPanelLayout.createSequentialGroup()
+      .addContainerGap()
+      .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PoliticalPanelLayout.createSequentialGroup()
+          .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addComponent(polPowLabel)
+            .addComponent(polPowDisplay))
+          .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addComponent(armyListTitlePanel))
+        .addComponent(leninImage, javax.swing.GroupLayout.Alignment.TRAILING)
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PoliticalPanelLayout.createSequentialGroup()
+          .addComponent(turnLabel)
+          .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+          .addComponent(calendarDateLabel)
+          .addGap(36, 36, 36)))
+      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+      .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addComponent(armyScroll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+          .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PoliticalPanelLayout.createSequentialGroup()
+            .addComponent(expandButton)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(updateAreaButton)))
-        .addContainerGap(20, Short.MAX_VALUE))
-    );
-    AreaPanelLayout.setVerticalGroup(
-      AreaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(AreaPanelLayout.createSequentialGroup()
-        .addContainerGap()
+            .addComponent(moveButton))
+          .addComponent(leninText, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+      .addGap(18, 18, 18)
+      .addGroup(PoliticalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(PoliticalPanelLayout.createSequentialGroup()
+          .addComponent(decisionTitle)
+          .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+          .addComponent(decisionArea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addGroup(PoliticalPanelLayout.createSequentialGroup()
+          .addGap(0, 0, Short.MAX_VALUE)
+          .addComponent(endTurnButton)))
+      .addContainerGap())
+  );
+
+  jTabbedPane1.addTab("Political", PoliticalPanel);
+
+  areaTitle.setFont(new java.awt.Font("Cantarell", 0, 24)); // NOI18N
+  areaTitle.setText("Area List");
+
+  areaList.setModel(areaModel);
+  areaList.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+  areaList.setVisibleRowCount(4);
+  areaList.setCellRenderer(new AreaListRenderer(areas));
+  areaScroll.setViewportView(areaList);
+
+  updateAreaButton.setText("Update Areas");
+  updateAreaButton.addActionListener(new java.awt.event.ActionListener()
+  {
+    public void actionPerformed(java.awt.event.ActionEvent evt)
+    {
+      updateAreaButtonActionPerformed(evt);
+    }
+  });
+
+  javax.swing.GroupLayout AreaPanelLayout = new javax.swing.GroupLayout(AreaPanel);
+  AreaPanel.setLayout(AreaPanelLayout);
+  AreaPanelLayout.setHorizontalGroup(
+    AreaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    .addGroup(AreaPanelLayout.createSequentialGroup()
+      .addContainerGap()
+      .addGroup(AreaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addComponent(areaTitle)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(AreaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(areaScroll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(updateAreaButton))
-        .addContainerGap(372, Short.MAX_VALUE))
-    );
+        .addGroup(AreaPanelLayout.createSequentialGroup()
+          .addComponent(areaScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+          .addComponent(updateAreaButton)))
+      .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+  );
+  AreaPanelLayout.setVerticalGroup(
+    AreaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    .addGroup(AreaPanelLayout.createSequentialGroup()
+      .addContainerGap()
+      .addComponent(areaTitle)
+      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+      .addGroup(AreaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addComponent(areaScroll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(updateAreaButton))
+      .addContainerGap(372, Short.MAX_VALUE))
+  );
 
-    jTabbedPane1.addTab("Areas", AreaPanel);
+  jTabbedPane1.addTab("Areas", AreaPanel);
 
-    javax.swing.GroupLayout FactionsPanelLayout = new javax.swing.GroupLayout(FactionsPanel);
-    FactionsPanel.setLayout(FactionsPanelLayout);
-    FactionsPanelLayout.setHorizontalGroup(
-      FactionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 595, Short.MAX_VALUE)
-    );
-    FactionsPanelLayout.setVerticalGroup(
-      FactionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 486, Short.MAX_VALUE)
-    );
+  javax.swing.GroupLayout FactionsPanelLayout = new javax.swing.GroupLayout(FactionsPanel);
+  FactionsPanel.setLayout(FactionsPanelLayout);
+  FactionsPanelLayout.setHorizontalGroup(
+    FactionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    .addGap(0, 619, Short.MAX_VALUE)
+  );
+  FactionsPanelLayout.setVerticalGroup(
+    FactionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    .addGap(0, 486, Short.MAX_VALUE)
+  );
 
-    jTabbedPane1.addTab("Factions", FactionsPanel);
+  jTabbedPane1.addTab("Factions", FactionsPanel);
 
-    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-    getContentPane().setLayout(layout);
-    layout.setHorizontalGroup(
-      layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(layout.createSequentialGroup()
-        .addContainerGap()
-        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(39, Short.MAX_VALUE))
-    );
-    layout.setVerticalGroup(
-      layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(layout.createSequentialGroup()
-        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(75, Short.MAX_VALUE))
-    );
+  javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+  getContentPane().setLayout(layout);
+  layout.setHorizontalGroup(
+    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    .addGroup(layout.createSequentialGroup()
+      .addContainerGap()
+      .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 639, Short.MAX_VALUE))
+  );
+  layout.setVerticalGroup(
+    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    .addGroup(layout.createSequentialGroup()
+      .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+      .addContainerGap(75, Short.MAX_VALUE))
+  );
 
-    pack();
+  pack();
   }// </editor-fold>//GEN-END:initComponents
 
   private void updateAreaButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_updateAreaButtonActionPerformed
@@ -363,16 +388,16 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     }
 
     int divs = Integer.parseInt(choice);
-    if (divs * 5 > playerFaction.getPoliticalPower())
+    if (divs * DIVISION_COST > playerFaction.getPoliticalPower())
     {
-      String rejectedMsg = "That requires " + divs * 5 + " political power, which is more than you have.";
+      String rejectedMsg = "That requires " + divs * DIVISION_COST + " political power, which is more than you have.";
       JOptionPane.showMessageDialog(this, rejectedMsg, "Could Not Expand Army",
               JOptionPane.PLAIN_MESSAGE);
       return;
     }
 
     armyList.getSelectedValue().expand(divs);
-    playerFaction.incPolitlcalPower(-(divs * 5));
+    playerFaction.incPoliticalPower(-(divs * 5));
     updateDisplays();
   }//GEN-LAST:event_expandButtonActionPerformed
 
@@ -412,6 +437,36 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   {//GEN-HEADEREND:event_decisionAreaMouseEntered
     updateDisplays();
   }//GEN-LAST:event_decisionAreaMouseEntered
+
+  private void endTurnButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_endTurnButtonActionPerformed
+  {//GEN-HEADEREND:event_endTurnButtonActionPerformed
+    playerFaction.endTurn();
+
+    for (Faction fac : enemyFactions)
+    {
+      fac.endTurn();
+    }
+
+    turnNumber++;
+    turnLabel.setText("Turn " + turnNumber);
+
+    calendarDate.add(Calendar.MONTH, 1);
+    calendarDateLabel.setText(calendarDate.getDisplayName(Calendar.MONTH,
+            Calendar.SHORT, Locale.ENGLISH) + " "
+            + calendarDate.get(Calendar.YEAR));
+
+    updateDisplays();
+  }//GEN-LAST:event_endTurnButtonActionPerformed
+
+  private void decisionAreaMouseExited(java.awt.event.MouseEvent evt)//GEN-FIRST:event_decisionAreaMouseExited
+  {//GEN-HEADEREND:event_decisionAreaMouseExited
+    updateDisplays();
+  }//GEN-LAST:event_decisionAreaMouseExited
+
+  private void decisionAreaMouseMoved(java.awt.event.MouseEvent evt)//GEN-FIRST:event_decisionAreaMouseMoved
+  {//GEN-HEADEREND:event_decisionAreaMouseMoved
+    updateDisplays();
+  }//GEN-LAST:event_decisionAreaMouseMoved
 
   /**
    * @param args the command line arguments
@@ -467,8 +522,17 @@ public class SovietStruggleGUI extends javax.swing.JFrame
 
   private void initGame()
   {
+    // Initialize variables keeping track of turn and date
+    turnNumber = 1;
+    calendarDate = new GregorianCalendar();
+    calendarDate.set(1917, 10, 8);
+
+    System.out.println(calendarDate.getTime());
+
     // Create factions
     playerFaction = new Faction("Bolsheviks");
+
+    enemyFactions = new ArrayList<>();
 
     // Create areas
     areas = new ArrayList<>();
@@ -504,7 +568,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
             playerFaction,
             (player) ->
     {
-      player.incPolitlcalPower(100);
+      player.incPoliticalPower(100);
     });
     playerFaction.addDecision(dissolve);
 
@@ -552,7 +616,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
         decisionArea.add(new DecisionPanel(dec));
       }
     }
-    
+
     decisionArea.revalidate();
     decisionArea.repaint();
   }
@@ -590,6 +654,10 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   private static final String IMG_PATH = "src/sovietstruggle/img/";
   private static final String TEXT_PATH = "src/sovietstruggle/text/";
   private static final Color BG_COLOR = new Color(214, 217, 223);
+  private static final int DIVISION_COST = 5;
+
+  private int turnNumber;
+  private Calendar calendarDate;
 
   // Use parallel arrays structure with areas and areaModel
   private ArrayList<Area> areas;
@@ -612,6 +680,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   private javax.swing.JPopupMenu armyListMenu;
   private javax.swing.JLabel armyListTitlePanel;
   private javax.swing.JScrollPane armyScroll;
+  private javax.swing.JLabel calendarDateLabel;
   private javax.swing.JPanel decisionArea;
   private javax.swing.JLabel decisionTitle;
   private javax.swing.JButton endTurnButton;
@@ -623,6 +692,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   private javax.swing.JLabel polPowDisplay;
   private javax.swing.JLabel polPowLabel;
   private javax.swing.JMenuItem renameArmy;
+  private javax.swing.JLabel turnLabel;
   private javax.swing.JButton updateAreaButton;
   // End of variables declaration//GEN-END:variables
 }

@@ -45,8 +45,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jTabbedPane1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="39" max="32767" attributes="0"/>
+              <Component id="jTabbedPane1" pref="639" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -100,28 +99,29 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="armyListTitlePanel" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="polPowLabel" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="polPowDisplay" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="armyScroll" min="-2" pref="381" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                  <Component id="expandButton" max="32767" attributes="0"/>
-                                                  <Component id="moveButton" max="32767" attributes="0"/>
-                                              </Group>
-                                          </Group>
+                                      <Component id="armyScroll" min="-2" pref="381" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="expandButton" max="32767" attributes="0"/>
+                                          <Component id="moveButton" max="32767" attributes="0"/>
                                       </Group>
-                                      <EmptySpace pref="4" max="32767" attributes="0"/>
+                                      <EmptySpace pref="12" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="polPowLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="polPowDisplay" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="calendarDateLabel" min="-2" max="-2" attributes="0"/>
+                                          <Component id="turnLabel" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="24" pref="24" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
                                       <Component id="leninImage" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="leninText" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
@@ -130,7 +130,7 @@
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="decisionTitle" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="949" max="32767" attributes="0"/>
+                              <EmptySpace pref="946" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="decisionArea" min="-2" max="-2" attributes="0"/>
@@ -156,6 +156,12 @@
                               <Component id="armyListTitlePanel" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="leninImage" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="turnLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="calendarDateLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -282,7 +288,9 @@
             </Component>
             <Container class="javax.swing.JPanel" name="decisionArea">
               <Events>
+                <EventHandler event="mouseMoved" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="decisionAreaMouseMoved"/>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="decisionAreaMouseClicked"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="decisionAreaMouseExited"/>
                 <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="decisionAreaMouseEntered"/>
               </Events>
               <AuxValues>
@@ -297,7 +305,7 @@
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="201" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="189" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
@@ -305,6 +313,21 @@
             <Component class="javax.swing.JButton" name="endTurnButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="End Turn"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="endTurnButtonActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="turnLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Turn 1"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="calendarDateLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="calendarDate.getDisplayName(Calendar.MONTH,&#xa;            Calendar.SHORT, Locale.ENGLISH) + &quot; &quot;&#xa;            + calendarDate.get(Calendar.YEAR)" type="code"/>
+                </Property>
               </Properties>
             </Component>
           </SubComponents>
@@ -331,7 +354,7 @@
                               <Component id="updateAreaButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="20" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -405,7 +428,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="595" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="619" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
