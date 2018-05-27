@@ -64,6 +64,11 @@ public class Faction
   {
     armies.add(a);
   }
+  
+  public void removeArmy(Army a)
+  {
+    armies.remove(a);
+  }
 
   public Army makeArmy(String n, Area a)
   {

@@ -52,9 +52,24 @@ public class Army
     return controller;
   }
 
+  public String getName()
+  {
+    return name;
+  }
+
+  public Area getArea()
+  {
+    return area;
+  }
+  
   public void setName(String name)
   {
     this.name = name;
+  }
+
+  public int getDivisions()
+  {
+    return divisions;
   }
 
   @Override

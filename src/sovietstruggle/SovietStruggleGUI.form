@@ -104,6 +104,7 @@
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Component id="expandButton" max="32767" attributes="0"/>
                                           <Component id="moveButton" max="32767" attributes="0"/>
+                                          <Component id="combineButton" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace pref="12" max="32767" attributes="0"/>
                                   </Group>
@@ -165,26 +166,31 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="armyScroll" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="expandButton" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="moveButton" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="armyScroll" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="leninText" min="-2" pref="65" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="leninText" min="-2" pref="65" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="decisionTitle" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="decisionArea" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      <Component id="endTurnButton" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
                           </Group>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="decisionTitle" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="expandButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="decisionArea" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
+                              <Component id="moveButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="combineButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="endTurnButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -329,6 +335,14 @@
                   <Connection code="calendarDate.getDisplayName(Calendar.MONTH,&#xa;            Calendar.SHORT, Locale.ENGLISH) + &quot; &quot;&#xa;            + calendarDate.get(Calendar.YEAR)" type="code"/>
                 </Property>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="combineButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Combine"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="combineButtonActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
