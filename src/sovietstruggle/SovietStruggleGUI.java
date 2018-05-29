@@ -5,6 +5,7 @@
  */
 package sovietstruggle;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -65,7 +66,8 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     calendarDateLabel = new javax.swing.JLabel();
     combineButton = new javax.swing.JButton();
     mapPane = new javax.swing.JLayeredPane();
-    mapLabel = new javax.swing.JLabel();
+    updateMapPane();
+    mapPanel1 = new sovietstruggle.mapPanel();
     AreaPanel = new javax.swing.JPanel();
     areaTitle = new javax.swing.JLabel();
     areaScroll = new javax.swing.JScrollPane();
@@ -171,21 +173,23 @@ public class SovietStruggleGUI extends javax.swing.JFrame
 
   mapPane.setBackground(new java.awt.Color(54, 137, 220));
 
-  mapLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sovietstruggle/img/partial_map.png"))); // NOI18N
-
-  mapPane.setLayer(mapLabel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+  mapPane.setLayer(mapPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
   javax.swing.GroupLayout mapPaneLayout = new javax.swing.GroupLayout(mapPane);
   mapPane.setLayout(mapPaneLayout);
   mapPaneLayout.setHorizontalGroup(
     mapPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-    .addComponent(mapLabel)
+    .addGroup(mapPaneLayout.createSequentialGroup()
+      .addContainerGap()
+      .addComponent(mapPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+      .addContainerGap(88, Short.MAX_VALUE))
   );
   mapPaneLayout.setVerticalGroup(
     mapPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
     .addGroup(mapPaneLayout.createSequentialGroup()
-      .addComponent(mapLabel)
-      .addGap(0, 2, Short.MAX_VALUE))
+      .addContainerGap()
+      .addComponent(mapPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+      .addContainerGap(1357, Short.MAX_VALUE))
   );
 
   javax.swing.GroupLayout PoliticalPanelLayout = new javax.swing.GroupLayout(PoliticalPanel);
@@ -603,10 +607,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     areas.add(latvia);
 
     areaModel = new DefaultListModel<>();
-    for (Area a : areas)
-    {
-      areaModel.addElement(a);
-    }
+    updateAreaList();
 
     // Create armies
     playerFaction.makeArmy("Latvian Riflemen", latvia);
@@ -640,6 +641,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     updateArmyList();
     updateDecisionArea();
     updatePolPowDisplay();
+    updateMapPane();
   }
 
   private void updateAreaList()
@@ -679,6 +681,17 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   private void updatePolPowDisplay()
   {
     polPowDisplay.setText("" + playerFaction.getPoliticalPower());
+  }
+  
+  private void updateMapPane()
+  {
+    AreaPanel moscow = new AreaPanel(areas.get(0));
+    moscow.setLocation(0, 0);
+    mapPane.setLayout(null);
+    mapPane.add(moscow, new Integer(10), 0);
+    moscow.setBounds(0, 0, 100, 100);
+    // moscow.setVisible(true);
+    System.out.println("mapPane updated!");
   }
 
   private void showPlainDialog(String text, String title)
@@ -744,8 +757,8 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   private javax.swing.JTabbedPane jTabbedPane1;
   private javax.swing.JLabel leninImage;
   private javax.swing.JLabel leninText;
-  private javax.swing.JLabel mapLabel;
   private javax.swing.JLayeredPane mapPane;
+  private sovietstruggle.mapPanel mapPanel1;
   private javax.swing.JButton moveButton;
   private javax.swing.JLabel polPowDisplay;
   private javax.swing.JLabel polPowLabel;
