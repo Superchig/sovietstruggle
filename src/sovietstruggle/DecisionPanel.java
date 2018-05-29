@@ -11,6 +11,7 @@ package sovietstruggle;
  */
 public class DecisionPanel extends javax.swing.JPanel
 {
+  private SovietStruggleGUI game;
 
   /**
    * Creates new form DecisionPanel
@@ -23,6 +24,14 @@ public class DecisionPanel extends javax.swing.JPanel
   public DecisionPanel(Decision decision)
   {
     this.decision = decision;
+    initComponents();
+    game = null;
+  }
+  
+  public DecisionPanel(Decision decision, SovietStruggleGUI game)
+  {
+    this.decision = decision;
+    this.game = game;
     initComponents();
   }
 
@@ -80,6 +89,7 @@ public class DecisionPanel extends javax.swing.JPanel
   private void takeButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_takeButtonActionPerformed
   {//GEN-HEADEREND:event_takeButtonActionPerformed
     decision.take();
+    game.updateDecisionArea();
   }//GEN-LAST:event_takeButtonActionPerformed
 
   private Decision decision;
