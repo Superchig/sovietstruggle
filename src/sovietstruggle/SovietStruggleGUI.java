@@ -304,7 +304,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
       .addGroup(AreaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addComponent(areaScroll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addComponent(updateAreaButton))
-      .addContainerGap(714, Short.MAX_VALUE))
+      .addContainerGap(762, Short.MAX_VALUE))
   );
 
   jTabbedPane1.addTab("Areas", AreaPanel);
@@ -366,7 +366,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
       .addComponent(decisionTitle)
       .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
       .addComponent(decisionArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-      .addContainerGap(676, Short.MAX_VALUE))
+      .addContainerGap(724, Short.MAX_VALUE))
   );
 
   jTabbedPane1.addTab("Decisions", decisionPanel);
@@ -381,7 +381,9 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   );
   layout.setVerticalGroup(
     layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 867, javax.swing.GroupLayout.PREFERRED_SIZE)
+    .addGroup(layout.createSequentialGroup()
+      .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 915, javax.swing.GroupLayout.PREFERRED_SIZE)
+      .addGap(0, 10, Short.MAX_VALUE))
   );
 
   pack();
@@ -581,8 +583,6 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     turnNumber = 1;
     calendarDate = new GregorianCalendar();
     calendarDate.set(1917, 10, 8);
-
-    System.out.println(calendarDate.getTime());
 
     // Create factions
     playerFaction = new Faction("Bolsheviks");
