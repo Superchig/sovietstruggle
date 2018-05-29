@@ -38,6 +38,9 @@
           <Image iconType="3" name="/sovietstruggle/img/partial_map.png"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="mapLabelMouseClicked"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

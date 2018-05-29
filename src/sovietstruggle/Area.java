@@ -33,7 +33,7 @@ public class Area
     this.name = name;
     this.playerFaction = playerFaction;
     armies = new ArrayList<>();
-    image = scaleImage(imgPath);
+    image = TextFormat.scaleImage(imgPath, IMAGE_HEIGHT);
   }
 
   public void addArmy(Army a)
@@ -55,26 +55,16 @@ public class Area
   {
     return image;
   }
-
-  private Icon scaleImage(String imgPath)
+  
+  public boolean hasAlliedArmy()
   {
-    try
+    for (Army a : armies)
     {
-      BufferedImage img;
-      if (imgPath.indexOf("http") == 0)
-      {
-        img = ImageIO.read(new URL(imgPath));
-      } else
-      {
-        img = ImageIO.read(new File(imgPath));
-      }
-      return new ImageIcon(img.getScaledInstance(-1, IMAGE_HEIGHT, Image.SCALE_SMOOTH));
-    } catch (IOException e)
-    {
-      e.printStackTrace();
-      System.out.println("Error: Failed to scale image at " + imgPath);
-      return new ImageIcon(imgPath);
+      if (a.getController() == playerFaction)
+        return true;
     }
+    
+    return false;
   }
 
   @Override

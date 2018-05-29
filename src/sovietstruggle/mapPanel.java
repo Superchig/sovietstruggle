@@ -33,6 +33,13 @@ public class mapPanel extends javax.swing.JPanel
     mapLabel = new javax.swing.JLabel();
 
     mapLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sovietstruggle/img/partial_map.png"))); // NOI18N
+    mapLabel.addMouseListener(new java.awt.event.MouseAdapter()
+    {
+      public void mouseClicked(java.awt.event.MouseEvent evt)
+      {
+        mapLabelMouseClicked(evt);
+      }
+    });
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
     this.setLayout(layout);
@@ -49,6 +56,11 @@ public class mapPanel extends javax.swing.JPanel
         .addGap(0, 12, Short.MAX_VALUE))
     );
   }// </editor-fold>//GEN-END:initComponents
+
+  private void mapLabelMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_mapLabelMouseClicked
+  {//GEN-HEADEREND:event_mapLabelMouseClicked
+    System.out.println("mapPanel x: " + evt.getX() + ", y: " + evt.getY());
+  }//GEN-LAST:event_mapLabelMouseClicked
 
 
   // Variables declaration - do not modify//GEN-BEGIN:variables

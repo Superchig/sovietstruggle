@@ -50,6 +50,8 @@ public class SovietStruggleGUI extends javax.swing.JFrame
 
     armyListMenu = new javax.swing.JPopupMenu();
     renameArmy = new javax.swing.JMenuItem();
+    mainMapMenu = new javax.swing.JPopupMenu();
+    moveArmy = new javax.swing.JMenuItem();
     jTabbedPane1 = new javax.swing.JTabbedPane();
     PoliticalPanel = new javax.swing.JPanel();
     polPowLabel = new javax.swing.JLabel();
@@ -67,7 +69,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     combineButton = new javax.swing.JButton();
     mapPane = new javax.swing.JLayeredPane();
     updateMapPane();
-    mapPanel1 = new sovietstruggle.mapPanel();
+    mainMap = new sovietstruggle.mapPanel();
     AreaPanel = new javax.swing.JPanel();
     areaTitle = new javax.swing.JLabel();
     areaScroll = new javax.swing.JScrollPane();
@@ -86,6 +88,9 @@ public class SovietStruggleGUI extends javax.swing.JFrame
       }
     });
     armyListMenu.add(renameArmy);
+
+    moveArmy.setText("Move Army");
+    mainMapMenu.add(moveArmy);
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setTitle("Soviet Struggle");
@@ -173,23 +178,21 @@ public class SovietStruggleGUI extends javax.swing.JFrame
 
   mapPane.setBackground(new java.awt.Color(54, 137, 220));
 
-  mapPane.setLayer(mapPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+  mapPane.setLayer(mainMap, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
   javax.swing.GroupLayout mapPaneLayout = new javax.swing.GroupLayout(mapPane);
   mapPane.setLayout(mapPaneLayout);
   mapPaneLayout.setHorizontalGroup(
     mapPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
     .addGroup(mapPaneLayout.createSequentialGroup()
-      .addContainerGap()
-      .addComponent(mapPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-      .addContainerGap(88, Short.MAX_VALUE))
+      .addComponent(mainMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+      .addGap(0, 98, Short.MAX_VALUE))
   );
   mapPaneLayout.setVerticalGroup(
     mapPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
     .addGroup(mapPaneLayout.createSequentialGroup()
-      .addContainerGap()
-      .addComponent(mapPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-      .addContainerGap(1357, Short.MAX_VALUE))
+      .addComponent(mainMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+      .addGap(0, 1368, Short.MAX_VALUE))
   );
 
   javax.swing.GroupLayout PoliticalPanelLayout = new javax.swing.GroupLayout(PoliticalPanel);
@@ -685,13 +688,16 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   
   private void updateMapPane()
   {
-    AreaPanel moscow = new AreaPanel(areas.get(0));
+    AreaPanel moscow = new AreaPanel(areas.get(0), this, 232, 263);
     moscow.setLocation(0, 0);
     mapPane.setLayout(null);
-    mapPane.add(moscow, new Integer(10), 0);
-    moscow.setBounds(0, 0, 100, 100);
-    // moscow.setVisible(true);
-    System.out.println("mapPane updated!");
+    mapPane.add(moscow, 10);
+    moscow.updateBounds();
+  }
+  
+  public void showMainMapMenu(AreaPanel aPanel)
+  {
+    mainMapMenu.show(mapPane, aPanel.getX() + 20, aPanel.getY());
   }
 
   private void showPlainDialog(String text, String title)
@@ -719,7 +725,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   }
 
   // Custom variables declaration
-  private static final String IMG_PATH = "src/sovietstruggle/img/";
+  public static final String IMG_PATH = "src/sovietstruggle/img/";
   private static final String TEXT_PATH = "src/sovietstruggle/text/";
   private static final Color BG_COLOR = new Color(214, 217, 223);
   private static final int DIVISION_COST = 5;
@@ -757,8 +763,10 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   private javax.swing.JTabbedPane jTabbedPane1;
   private javax.swing.JLabel leninImage;
   private javax.swing.JLabel leninText;
+  private sovietstruggle.mapPanel mainMap;
+  private javax.swing.JPopupMenu mainMapMenu;
   private javax.swing.JLayeredPane mapPane;
-  private sovietstruggle.mapPanel mapPanel1;
+  private javax.swing.JMenuItem moveArmy;
   private javax.swing.JButton moveButton;
   private javax.swing.JLabel polPowDisplay;
   private javax.swing.JLabel polPowLabel;

@@ -21,9 +21,12 @@ public class AreaPanel extends javax.swing.JPanel
     area = null;
   }
   
-  public AreaPanel(Area area)
+  public AreaPanel(Area area, SovietStruggleGUI game, int xLocation, int yLocation)
   {
     this.area = area;
+    this.game = game;
+    this.xLocation = xLocation;
+    this.yLocation = yLocation;
     initComponents();
   }
 
@@ -38,10 +41,11 @@ public class AreaPanel extends javax.swing.JPanel
   {
 
     areaButton = new javax.swing.JButton();
-    jLabel1 = new javax.swing.JLabel();
 
     areaButton.setBackground(java.awt.Color.green);
-    areaButton.setText(area == null ? "Placeholder Area" : area.getName());
+    areaButton.setIcon(TextFormat.scaleImage(SovietStruggleGUI.IMG_PATH + "map_marker.png", 20)
+    );
+    areaButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
     areaButton.addActionListener(new java.awt.event.ActionListener()
     {
       public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -50,39 +54,52 @@ public class AreaPanel extends javax.swing.JPanel
       }
     });
 
-    jLabel1.setText("This is a Test label, anyone see it?");
-
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
     this.setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(areaButton)
-          .addGroup(layout.createSequentialGroup()
-            .addGap(168, 168, 168)
-            .addComponent(jLabel1)))
-        .addContainerGap(168, Short.MAX_VALUE))
+        .addComponent(areaButton)
+        .addContainerGap(102, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addComponent(areaButton)
-        .addGap(84, 84, 84)
-        .addComponent(jLabel1)
-        .addContainerGap(173, Short.MAX_VALUE))
+        .addContainerGap(98, Short.MAX_VALUE))
     );
   }// </editor-fold>//GEN-END:initComponents
 
   private void areaButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_areaButtonActionPerformed
   {//GEN-HEADEREND:event_areaButtonActionPerformed
-    // TODO add your handling code here:
+    game.showMainMapMenu(this);
   }//GEN-LAST:event_areaButtonActionPerformed
 
+  public void updateBounds()
+  {
+    setBounds(xLocation, yLocation, 20, 20);
+  }
+
+  public int getX()
+  {
+    return xLocation;
+  }
+
+  public int getY()
+  {
+    return yLocation;
+  }
+  
+  public boolean hasAlliedArmy()
+  {
+    return area.hasAlliedArmy();
+  }
+  
   private Area area;
+  private SovietStruggleGUI game;
+  private int xLocation, yLocation;
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton areaButton;
-  private javax.swing.JLabel jLabel1;
   // End of variables declaration//GEN-END:variables
 }
