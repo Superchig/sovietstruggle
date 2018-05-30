@@ -7,6 +7,7 @@ package sovietstruggle;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -17,6 +18,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -404,20 +406,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
 
   private void moveButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_moveButtonActionPerformed
   {//GEN-HEADEREND:event_moveButtonActionPerformed
-    Area choice = (Area) JOptionPane.showInputDialog(this,
-            "Where do you want to move this army to?",
-            "Move Army", JOptionPane.PLAIN_MESSAGE, null,
-            areas.toArray(), "Choose!");
-
-    if (choice == null)
-    {
-      return;
-    }
-
-    Army army = armyList.getSelectedValue();
-
-    army.moveTo(choice);
-    updateDisplays();
+    showMoveArmyDialog(armyList.getSelectedValue());
   }//GEN-LAST:event_moveButtonActionPerformed
 
   private void expandButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_expandButtonActionPerformed
@@ -587,26 +576,33 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     calendarDate.set(1917, 10, 8);
 
     // Create factions
-    playerFaction = new Faction("Bolsheviks");
+    playerFaction = new Faction("Bolsheviks", Color.GREEN);
 
     enemyFactions = new ArrayList<>();
 
+    Faction kolchak = new Faction("Kolchak", Color.GRAY);
+    enemyFactions.add(kolchak);
+    Faction denikin = new Faction("Denikin", new Color(153, 51, 102));
+    enemyFactions.add(denikin);
+
     // Create areas
     areas = new ArrayList<>();
-    Area moscow = new Area("Moscow", IMG_PATH + "lenin.jpg", playerFaction);
-    areas.add(moscow);
 
-    areas.add(new Area("West Ukraine", IMG_PATH + "lenin_small.png",
-            playerFaction));
-
-    Area latvia = new Area("Latvia",
+    Area moscow = createArea("Moscow", IMG_PATH + "lenin.jpg", playerFaction);
+    Area latvia = createArea("Latvia",
             "https://cdn.britannica.com/700x450/53/6253-004-E40A3608.jpg",
             playerFaction);
-    areas.add(latvia);
+    createArea("Western Oblasts", IMG_PATH + "lenin.jpg", playerFaction);
+    createArea("Expanded Crimea", IMG_PATH + "lenin.jpg", playerFaction);
+    createArea("Central Russia", IMG_PATH + "lenin.jpg", playerFaction);
+    createArea("Petrograd", IMG_PATH + "lenin.jpg", playerFaction);
 
-    Area westOblasts = new Area("Western Oblasts", IMG_PATH + "lenin.jpg",
-            playerFaction);
-    areas.add(westOblasts);
+    createArea("West Siberia", IMG_PATH + "lenin.jpg", kolchak);
+    createArea("East Siberia", IMG_PATH + "lenin.jpg", kolchak);
+    createArea("South Siberia", IMG_PATH + "lenin.jpg", kolchak);
+    
+    createArea("Upper North Caucasus", IMG_PATH + "lenin.jpg", denikin);
+    createArea("Lower North Caucasus", IMG_PATH + "lenin.jpg", denikin);
 
     areaModel = new DefaultListModel<>();
     updateAreaList();
@@ -637,9 +633,20 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     });
   }
 
+  public Faction getPlayerFaction()
+  {
+    return playerFaction;
+  }
+
+  public JLayeredPane getMapPane()
+  {
+    return mapPane;
+  }
+
   private void updateDisplays()
   {
     updateAreaList();
+    updateAreaButtons();
     updateArmyList();
     updateDecisionArea();
     updatePolPowDisplay();
@@ -651,6 +658,18 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     for (Area a : areas)
     {
       areaModel.addElement(a);
+    }
+  }
+
+  private void updateAreaButtons()
+  {
+    for (Component comp : mapPane.getComponents())
+    {
+      if (comp instanceof AreaButton)
+      {
+        AreaButton button = (AreaButton) comp;
+        button.updateIcon();
+      }
     }
   }
 
@@ -688,13 +707,57 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   {
     mapPane.setLayout(null);
 
-    AreaButton moscow = new AreaButton(getArea("Moscow"), this, 232, 263);
-    mapPane.add(moscow, 10);
-    moscow.updateBounds();
+    // Player
+    setupAreaButton(getArea("Moscow"), 232, 263);
+    setupAreaButton(getArea("Western Oblasts"), 215, 211);
+    setupAreaButton(getArea("Latvia"), 198, 189);
+    setupAreaButton(getArea("Expanded Crimea"), 210, 317);
+    setupAreaButton(getArea("Central Russia"), 253, 325);
+    setupAreaButton(getArea("Petrograd"), 250, 226);
+
+    // Kolchak
+    setupAreaButton(getArea("West Siberia"), 381, 290);
+    setupAreaButton(getArea("East Siberia"), 591, 228);
+    setupAreaButton(getArea("South Siberia"), 375, 378);
     
-    AreaButton westOblast = new AreaButton(getArea("Western Oblasts"), this, 215, 211);
-    mapPane.add(westOblast, 10);
-    westOblast.updateBounds();
+    // Denikin
+    setupAreaButton(getArea("Upper North Caucasus"), 179, 363);
+    setupAreaButton(getArea("Lower North Caucasus"), 191, 380);
+
+    updateAreaButtons();
+  }
+
+  private Area createArea(String name, String imgPath, Faction fac)
+  {
+    Area area = new Area(name, imgPath, fac);
+    areas.add(area);
+    fac.addArea(area);
+    return area;
+  }
+
+  private AreaButton setupAreaButton(Area area, int x, int y)
+  {
+    AreaButton button = new AreaButton(area, this, x, y);
+    mapPane.add(button, 10);
+    button.updateBounds();
+
+    return button;
+  }
+
+  public void showMoveArmyDialog(Army army)
+  {
+    Area choice = (Area) JOptionPane.showInputDialog(this,
+            "Where do you want to move this army to?",
+            "Move Army", JOptionPane.PLAIN_MESSAGE, null,
+            playerFaction.getAreas().toArray(), "Choose!");
+
+    if (choice == null)
+    {
+      return;
+    }
+
+    army.moveTo(choice);
+    updateDisplays();
   }
 
   public void showMainMapMenu(AreaButton aButton)

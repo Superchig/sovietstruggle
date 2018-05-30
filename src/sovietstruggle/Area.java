@@ -5,15 +5,8 @@
  */
 package sovietstruggle;
 
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import javax.imageio.ImageIO;
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import java.net.URL;
 
 /**
  *
@@ -54,6 +47,16 @@ public class Area
   public Icon getImage()
   {
     return image;
+  }
+
+  public ArrayList<Army> getArmies()
+  {
+    return armies;
+  }
+  
+  public Faction getController()
+  {
+    return playerFaction;
   }
   
   public boolean hasAlliedArmy()

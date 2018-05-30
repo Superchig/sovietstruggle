@@ -5,6 +5,7 @@
  */
 package sovietstruggle;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 /**
@@ -19,10 +20,12 @@ public class Faction
   private ArrayList<Army> armies;
   private int politicalPower, basePowerIncrease;
   private ArrayList<Decision> decisions;
+  private Color color;
 
-  public Faction(String name)
+  public Faction(String name, Color color)
   {
     this.name = name;
+    this.color = color;
     areas = new ArrayList<>();
     armies = new ArrayList<>();
     politicalPower = 50;
@@ -50,14 +53,29 @@ public class Faction
     decisions.add(new Decision(name, desc, this, action));
   }
   
+  public void addArea(Area area)
+  {
+    areas.add(area);
+  }
+  
   public ArrayList<Army> getArmies()
   {
     return armies;
   }
 
+  public ArrayList<Area> getAreas()
+  {
+    return areas;
+  }
+
   public ArrayList<Decision> getDecisions()
   {
     return decisions;
+  }
+
+  public Color getColor()
+  {
+    return color;
   }
 
   public void addArmy(Army a)

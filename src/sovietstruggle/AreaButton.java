@@ -6,7 +6,11 @@
 package sovietstruggle;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 
 /**
  *
@@ -40,10 +44,10 @@ public class AreaButton extends JButton
       }
     });
   }
-  
+
   public void buttonActionPerformed(ActionEvent evt)
   {
-    game.showMainMapMenu(this);
+    showPopupMenu();
   }
 
   public void updateBounds()
@@ -62,22 +66,76 @@ public class AreaButton extends JButton
   {
     return yLocation;
   }
-  
+
   @Override
   public int getWidth()
   {
     return width;
   }
-  
+
   @Override
   public int getHeight()
   {
     return height;
   }
 
-  public boolean hasAlliedArmy()
+  public void showPopupMenu()
   {
-    return area.hasAlliedArmy();
+    if (area.hasAlliedArmy())
+    {
+      showWhenArmyMenu();
+    }
+  }
+
+  public void updateIcon()
+  {
+    setBackground(area.getController().getColor());
+    
+    if (area.hasAlliedArmy())
+    {
+      setIcon(TextFormat.scaleImage(SovietStruggleGUI.IMG_PATH + "budenovka.jpg", 20));
+      height = 20;
+      width = 20;
+    }
+    else
+    {
+      setIcon(TextFormat.scaleImage(SovietStruggleGUI.IMG_PATH + "map_marker.png", 20));
+      height = 20;
+      width = 20;
+    }
+  }
+
+  private void showWhenArmyMenu()
+  {
+    JPopupMenu menu = new JPopupMenu();
+    JMenuItem move = new JMenuItem("Move");
+
+    move.addActionListener(new ActionListener()
+    {
+      @Override
+      public void actionPerformed(ActionEvent ae)
+      {
+        showMoveArmyDialog();
+      }
+    });
+
+    menu.add(move);
+    menu.show(game.getMapPane(), xLocation + 20, yLocation);
+  }
+
+  private void showMoveArmyDialog()
+  {
+    List<Army> armies = area.getArmies();
+    for (int i = 0; i < armies.size(); i++)
+    {
+      Army possibleArmy = armies.get(i);
+      
+      if (possibleArmy.getController() == game.getPlayerFaction())
+      {
+        game.showMoveArmyDialog(possibleArmy);
+        return;
+      }
+    }
   }
 
   private Area area;
