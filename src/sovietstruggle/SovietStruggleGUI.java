@@ -16,6 +16,7 @@ import java.util.Locale;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -68,7 +69,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     calendarDateLabel = new javax.swing.JLabel();
     combineButton = new javax.swing.JButton();
     mapPane = new javax.swing.JLayeredPane();
-    updateMapPane();
+    setupAreaGUI();
     mainMap = new sovietstruggle.mapPanel();
     AreaPanel = new javax.swing.JPanel();
     areaTitle = new javax.swing.JLabel();
@@ -448,7 +449,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   {//GEN-HEADEREND:event_armyListMousePressed
     if (evt.isPopupTrigger() && armyList.getSelectedValue() != null)
     {
-      showRenameArmyMenu(evt);
+      showDropDownArmyMenu(evt);
     }
   }//GEN-LAST:event_armyListMousePressed
 
@@ -456,19 +457,13 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   {//GEN-HEADEREND:event_armyListMouseReleased
     if (evt.isPopupTrigger() && armyList.getSelectedValue() != null)
     {
-      showRenameArmyMenu(evt);
+      showDropDownArmyMenu(evt);
     }
   }//GEN-LAST:event_armyListMouseReleased
 
   private void renameArmyActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_renameArmyActionPerformed
   {//GEN-HEADEREND:event_renameArmyActionPerformed
-    String choice = (String) JOptionPane.showInputDialog(null, "Rename Army", "Rename:", JOptionPane.PLAIN_MESSAGE);
-    if (choice == null)
-    {
-      return;
-    }
-
-    armyList.getSelectedValue().setName(choice);
+    showRenameArmyMenu(armyList.getSelectedValue());
   }//GEN-LAST:event_renameArmyActionPerformed
 
   private void decisionAreaMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_decisionAreaMouseClicked
@@ -518,17 +513,17 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     {
       return;
     }
-    
+
     Army first = selected.get(0);
     Army result = playerFaction.makeArmy(first.getName(), first.getArea());
     result.expand(-1); // Remove first initial division
-    
+
     for (Army army : selected)
     {
       result.expand(army.getDivisions());
       playerFaction.removeArmy(army);
     }
-    
+
     updateDisplays();
   }//GEN-LAST:event_combineButtonActionPerformed
 
@@ -609,6 +604,10 @@ public class SovietStruggleGUI extends javax.swing.JFrame
             playerFaction);
     areas.add(latvia);
 
+    Area westOblasts = new Area("Western Oblasts", IMG_PATH + "lenin.jpg",
+            playerFaction);
+    areas.add(westOblasts);
+
     areaModel = new DefaultListModel<>();
     updateAreaList();
 
@@ -644,7 +643,6 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     updateArmyList();
     updateDecisionArea();
     updatePolPowDisplay();
-    updateMapPane();
   }
 
   private void updateAreaList()
@@ -685,19 +683,23 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   {
     polPowDisplay.setText("" + playerFaction.getPoliticalPower());
   }
-  
-  private void updateMapPane()
+
+  private void setupAreaGUI()
   {
-    AreaPanel moscow = new AreaPanel(areas.get(0), this, 232, 263);
-    moscow.setLocation(0, 0);
     mapPane.setLayout(null);
+
+    AreaButton moscow = new AreaButton(getArea("Moscow"), this, 232, 263);
     mapPane.add(moscow, 10);
     moscow.updateBounds();
+    
+    AreaButton westOblast = new AreaButton(getArea("Western Oblasts"), this, 215, 211);
+    mapPane.add(westOblast, 10);
+    westOblast.updateBounds();
   }
-  
-  public void showMainMapMenu(AreaPanel aPanel)
+
+  public void showMainMapMenu(AreaButton aButton)
   {
-    mainMapMenu.show(mapPane, aPanel.getX() + 20, aPanel.getY());
+    mainMapMenu.show(mapPane, aButton.getX() + 20, aButton.getY());
   }
 
   private void showPlainDialog(String text, String title)
@@ -719,9 +721,33 @@ public class SovietStruggleGUI extends javax.swing.JFrame
             JOptionPane.PLAIN_MESSAGE);
   }
 
-  private void showRenameArmyMenu(MouseEvent evt)
+  private void showDropDownArmyMenu(MouseEvent evt)
   {
     armyListMenu.show(this, evt.getX() + 20, evt.getY() + 155);
+  }
+
+  private void showRenameArmyMenu(Army army)
+  {
+    String choice = (String) JOptionPane.showInputDialog(null, "Rename Army", "Rename:", JOptionPane.PLAIN_MESSAGE);
+    if (choice == null)
+    {
+      return;
+    }
+
+    army.setName(choice);
+  }
+
+  private Area getArea(String name)
+  {
+    for (Area a : areas)
+    {
+      if (name.equals(a.getName()))
+      {
+        return a;
+      }
+    }
+
+    return null;
   }
 
   // Custom variables declaration
