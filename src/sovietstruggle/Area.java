@@ -18,6 +18,7 @@ public class Area
   private static final int IMAGE_HEIGHT = 86;
   private String name;
   private ArrayList<Army> armies;
+  private ArrayList<Area> borderAreas;
   private Icon image;
   private Faction playerFaction;
 
@@ -26,6 +27,7 @@ public class Area
     this.name = name;
     this.playerFaction = playerFaction;
     armies = new ArrayList<>();
+    borderAreas = new ArrayList<>();
     image = TextFormat.scaleImage(imgPath, IMAGE_HEIGHT);
   }
 
@@ -37,6 +39,47 @@ public class Area
   public void removeArmy(Army a)
   {
     armies.remove(a);
+  }
+
+  public void addBorderArea(Area a)
+  {
+    if (!borderAreas.contains(a))
+      borderAreas.add(a);
+  }
+
+  public void addBorderArea(Area[] areaAry)
+  {
+    for (Area a : areaAry)
+    {
+      if (!borderAreas.contains(a))
+        borderAreas.add(a);
+    }
+  }
+
+  public void removeBorderArea(Area a)
+  {
+    borderAreas.remove(a);
+  }
+
+  public void removeBorderArea(Area[] areaAry)
+  {
+    for (Area a : areaAry)
+    {
+      borderAreas.remove(a);
+    }
+  }
+  
+  public boolean bordersEnemy()
+  {
+    for (Area a : borderAreas)
+    {
+      if (a.getController() != playerFaction)
+      {
+        return true;
+      }
+    }
+    
+    return false;
   }
 
   public String getName()
@@ -53,20 +96,22 @@ public class Area
   {
     return armies;
   }
-  
+
   public Faction getController()
   {
     return playerFaction;
   }
-  
+
   public boolean hasAlliedArmy()
   {
     for (Army a : armies)
     {
       if (a.getController() == playerFaction)
+      {
         return true;
+      }
     }
-    
+
     return false;
   }
 

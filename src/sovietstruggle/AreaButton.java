@@ -93,9 +93,9 @@ public class AreaButton extends JButton
     
     if (area.hasAlliedArmy())
     {
-      setIcon(TextFormat.scaleImage(SovietStruggleGUI.IMG_PATH + "budenovka.jpg", 20));
+      setIcon(TextFormat.scaleImage(SovietStruggleGUI.IMG_PATH + "peaked_cap.png", 20));
       height = 20;
-      width = 20;
+      width = 20; // 30 is more proportional
     }
     else
     {

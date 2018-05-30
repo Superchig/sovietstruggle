@@ -592,17 +592,40 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     Area latvia = createArea("Latvia",
             "https://cdn.britannica.com/700x450/53/6253-004-E40A3608.jpg",
             playerFaction);
-    createArea("Western Oblasts", IMG_PATH + "lenin.jpg", playerFaction);
-    createArea("Expanded Crimea", IMG_PATH + "lenin.jpg", playerFaction);
-    createArea("Central Russia", IMG_PATH + "lenin.jpg", playerFaction);
-    createArea("Petrograd", IMG_PATH + "lenin.jpg", playerFaction);
+    Area westOblasts = createArea("Western Oblasts", IMG_PATH + "lenin.jpg", playerFaction);
+    Area crimea = createArea("Expanded Crimea", IMG_PATH + "lenin.jpg", playerFaction);
+    Area cenRussia = createArea("Central Russia", IMG_PATH + "lenin.jpg", playerFaction);
+    Area petro = createArea("Petrograd", IMG_PATH + "lenin.jpg", playerFaction);
 
-    createArea("West Siberia", IMG_PATH + "lenin.jpg", kolchak);
-    createArea("East Siberia", IMG_PATH + "lenin.jpg", kolchak);
-    createArea("South Siberia", IMG_PATH + "lenin.jpg", kolchak);
+    Area westSiber = createArea("West Siberia", IMG_PATH + "lenin.jpg", kolchak);
+    Area eastSiber = createArea("East Siberia", IMG_PATH + "lenin.jpg", kolchak);
+    Area southSiber = createArea("South Siberia", IMG_PATH + "lenin.jpg", kolchak);
+
+    Area upperNorCau = createArea("Upper North Caucasus", IMG_PATH + "lenin.jpg", denikin);
+    Area lowerNorCau = createArea("Lower North Caucasus", IMG_PATH + "lenin.jpg", denikin);
+
+    // Add areas to each other as border areas
+    moscow.addBorderArea(new Area[]
+    {
+      westOblasts, crimea, cenRussia, petro
+    });
     
-    createArea("Upper North Caucasus", IMG_PATH + "lenin.jpg", denikin);
-    createArea("Lower North Caucasus", IMG_PATH + "lenin.jpg", denikin);
+    westOblasts.addBorderArea(new Area[]
+    {
+      latvia, crimea, moscow, petro
+    });
+    
+    crimea.addBorderArea(new Area[]
+    {
+      upperNorCau, lowerNorCau, westOblasts, moscow, cenRussia
+    });
+    
+    cenRussia.addBorderArea(new Area[]
+    {
+      crimea, moscow, petro, westSiber, southSiber
+    });
+    
+    latvia.addBorderArea(westOblasts);
 
     areaModel = new DefaultListModel<>();
     updateAreaList();
@@ -719,7 +742,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     setupAreaButton(getArea("West Siberia"), 381, 290);
     setupAreaButton(getArea("East Siberia"), 591, 228);
     setupAreaButton(getArea("South Siberia"), 375, 378);
-    
+
     // Denikin
     setupAreaButton(getArea("Upper North Caucasus"), 179, 363);
     setupAreaButton(getArea("Lower North Caucasus"), 191, 380);
