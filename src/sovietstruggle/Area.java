@@ -20,12 +20,12 @@ public class Area
   private ArrayList<Army> armies;
   private ArrayList<Area> borderAreas;
   private Icon image;
-  private Faction playerFaction;
+  private Faction controller;
 
-  public Area(String name, String imgPath, Faction playerFaction)
+  public Area(String name, String imgPath, Faction controller)
   {
     this.name = name;
-    this.playerFaction = playerFaction;
+    this.controller = controller;
     armies = new ArrayList<>();
     borderAreas = new ArrayList<>();
     image = TextFormat.scaleImage(imgPath, IMAGE_HEIGHT);
@@ -73,13 +73,40 @@ public class Area
   {
     for (Area a : borderAreas)
     {
-      if (a.getController() != playerFaction)
+      if (a.getController() != controller)
       {
         return true;
       }
     }
     
     return false;
+  }
+
+  public ArrayList<Area> getBorderAreas()
+  {
+    return borderAreas;
+  }
+  
+  public Area getRandBorderArea()
+  {
+    int index = (int)(Math.random() * borderAreas.size());
+    return borderAreas.get(index);
+  }
+  
+  public Area getRandEnemyBorderArea()
+  {
+    ArrayList<Area> enemyBorderAreas = new ArrayList<>();
+    for (Area area : borderAreas)
+    {
+      // Checks if enemy area has an army allied to itself, which is technically an enemy army
+      if (area.controller != controller)
+      {
+        enemyBorderAreas.add(area);
+      }
+    }
+    
+    int index = (int)(Math.random() * enemyBorderAreas.size());
+    return enemyBorderAreas.get(index);
   }
 
   public String getName()
@@ -99,20 +126,34 @@ public class Area
 
   public Faction getController()
   {
-    return playerFaction;
+    return controller;
   }
 
   public boolean hasAlliedArmy()
   {
     for (Army a : armies)
     {
-      if (a.getController() == playerFaction)
+      if (a.getController() == controller)
       {
         return true;
       }
     }
 
     return false;
+  }
+  
+  // Returns null if there is no allied army
+  public Army getAlliedArmy()
+  {
+    for (Army a : armies)
+    {
+      if (a.getController() == controller)
+      {
+        return a;
+      }
+    }
+    
+    return null;
   }
 
   @Override
@@ -123,7 +164,7 @@ public class Area
     boolean hasAllied = false;
     for (Army army : armies)
     {
-      if (army.getController() == playerFaction)
+      if (army.getController() == controller)
       {
         hasAllied = true;
         break;

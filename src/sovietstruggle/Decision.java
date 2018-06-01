@@ -20,7 +20,7 @@ public class Decision
   {
     this.name = name;
     this.description = description;
-    this.faction = faction;
+//    this.faction = faction;
     this.action = action;
     taken = false;
   }

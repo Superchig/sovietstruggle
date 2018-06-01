@@ -25,16 +25,16 @@ public class Army
     divisions = 1;
   }
 
-  // Returns previous Area
-  public Area moveTo(Area newArea)
+  // Should handle what happens if there is an enemy army in the area (battle)
+  public void moveTo(Area newArea)
   {
     Area oldArea = area;
 
     area.removeArmy(this);
     newArea.addArmy(this);
     area = newArea;
-
-    return oldArea;
+    
+    // battle code to be implemented
   }
   
   public void expand(int numDivs)
