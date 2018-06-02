@@ -772,7 +772,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     Area choice = (Area) JOptionPane.showInputDialog(this,
             "Where do you want to move this army to?",
             "Move Army", JOptionPane.PLAIN_MESSAGE, null,
-            playerFaction.getAreas().toArray(), "Choose!");
+            army.getArea().getBorderAreas().toArray(), "Choose!");
 
     if (choice == null)
     {
