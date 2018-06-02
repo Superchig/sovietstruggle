@@ -8,6 +8,7 @@ package sovietstruggle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -93,13 +94,13 @@ public class AreaButton extends JButton
     
     if (area.hasAlliedArmy())
     {
-      setIcon(TextFormat.scaleImage(SovietStruggleGUI.IMG_PATH + "peaked_cap.png", 20));
+      setIcon(PEAKED_CAP);
       height = 20;
       width = 20; // 30 is more proportional
     }
     else
     {
-      setIcon(TextFormat.scaleImage(SovietStruggleGUI.IMG_PATH + "map_marker.png", 20));
+      setIcon(MAP_MARKER);
       height = 20;
       width = 20;
     }
@@ -138,6 +139,9 @@ public class AreaButton extends JButton
     }
   }
 
+  private static Icon MAP_MARKER = TextFormat.scaleImage(SovietStruggleGUI.IMG_PATH + "map_marker.png", 20);
+  private static Icon PEAKED_CAP = TextFormat.scaleImage(SovietStruggleGUI.IMG_PATH + "peaked_cap.png", 20);
+  
   private Area area;
   private SovietStruggleGUI game;
   private int xLocation, yLocation, width, height;
