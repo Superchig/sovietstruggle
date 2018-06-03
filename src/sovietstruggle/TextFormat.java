@@ -79,4 +79,17 @@ public class TextFormat
       return new ImageIcon(imgPath);
     }
   }
+  
+  public static int findMaxPos(int[] nums)
+  {
+    int maxPos = 0;
+    for (int i = 1; i < nums.length; i++)
+    {
+      if (nums[maxPos] < nums[i])
+      {
+        maxPos = i;
+      }
+    }
+    return maxPos;
+  }
 }
