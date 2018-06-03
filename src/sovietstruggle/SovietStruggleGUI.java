@@ -507,6 +507,14 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     }
 
     Army first = selected.get(0);
+    for (Army army : selected)
+    {
+      if (army.getArea() != first.getArea())
+      {
+        return;
+      }
+    }
+    
     Army result = playerFaction.makeArmy(first.getName(), first.getArea());
     result.expand(-1); // Remove first initial division
 
@@ -514,6 +522,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     {
       result.expand(army.getDivisions());
       playerFaction.removeArmy(army);
+      army.getArea().removeArmy(army);
     }
 
     updateDisplays();
