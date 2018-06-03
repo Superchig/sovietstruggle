@@ -406,7 +406,10 @@ public class SovietStruggleGUI extends javax.swing.JFrame
 
   private void moveButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_moveButtonActionPerformed
   {//GEN-HEADEREND:event_moveButtonActionPerformed
-    showMoveArmyDialog(armyList.getSelectedValue());
+    if (!armyList.isSelectionEmpty())
+    {
+      showMoveArmyDialog(armyList.getSelectedValue());
+    }
   }//GEN-LAST:event_moveButtonActionPerformed
 
   private void expandButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_expandButtonActionPerformed
@@ -609,22 +612,22 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     {
       westOblasts, crimea, cenRussia, petro
     });
-    
+
     westOblasts.addBorderArea(new Area[]
     {
       latvia, crimea, moscow, petro
     });
-    
+
     crimea.addBorderArea(new Area[]
     {
       upperNorCau, lowerNorCau, westOblasts, moscow, cenRussia
     });
-    
+
     cenRussia.addBorderArea(new Area[]
     {
       crimea, moscow, petro, westSiber, southSiber
     });
-    
+
     latvia.addBorderArea(westOblasts);
 
     areaModel = new DefaultListModel<>();
