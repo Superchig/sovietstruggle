@@ -5,7 +5,6 @@
 - Add and implement split button
 
 # Todo
-- Use previous army to test battle system
 - Add info option in drop-down menu for allied and enemy armies
 - Print out battle ongoings and results in Battle Log
 - Make AI actually do things

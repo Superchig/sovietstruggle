@@ -30,13 +30,14 @@ public class Army
   // Should handle what happens if there is an enemy army in the area (battle)
   public void moveTo(Area newArea)
   {
-    directMoveTo(newArea, false);
+    Area oldArea = area;
+    directMoveTo(newArea);
 
     if (newArea.hasEnemyToPlayerArmy())
     {
       Army defender = area.getAlliedArmy();
       System.out.println("defender: " + defender);
-      handleBattle(defender);
+      handleBattle(defender, oldArea);
     }
     else
     {
@@ -44,7 +45,7 @@ public class Army
     }
   }
 
-  private void handleBattle(Army defender)
+  private void handleBattle(Army defender, Area oldArea)
   {
     // To be implemented
     int origDivisions = divisions, origDefenderDivisions = defender.divisions;
@@ -59,15 +60,17 @@ public class Army
         defender.retreat(origDefenderDivisions);
         area.setController(controller);
         System.out.println("Attacker wins!");
-        break;
+        return;
       }
       else if (divisions < 0.7 * origDivisions)
       {
         System.out.println("Defender wins!");
         retreat(origDivisions);
-        break;
+        return;
       }
     }
+    
+    directMoveTo(oldArea);
   }
 
   private void handleBattleRound(Army defender)
@@ -112,16 +115,11 @@ public class Army
     }
   }
 
-  private void directMoveTo(Area newArea, boolean capture)
+  private void directMoveTo(Area newArea)
   {
     area.removeArmy(this);
     newArea.addArmy(this);
     area = newArea;
-
-    if (newArea.getController() != controller && capture)
-    {
-      newArea.setController(controller);
-    }
   }
 
   /**
@@ -150,7 +148,7 @@ public class Army
     }
     else
     {
-      directMoveTo(areaToRetreat, false);
+      directMoveTo(areaToRetreat);
       divisions = origDivisions / 2;
       if (origDivisions / 2 == 0)
       {
