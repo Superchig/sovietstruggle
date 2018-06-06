@@ -190,6 +190,45 @@ public class Area
     return false;
   }
 
+  /**
+   * Returns whether or not this area has an army that is an enemy to a provided
+   * army.
+   *
+   * @param armyToCheck army to check against for enemy
+   * @return whether or not there is an enemy army to a given army
+   */
+  public boolean hasEnemyToThisArmy(Army armyToCheck)
+  {
+    for (Army army : armies)
+    {
+      if (army.getController() != armyToCheck.getController())
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Returns whether or not this area has an army that is allied to its
+   * controller.
+   *
+   * @return whether or not there is an allied army
+   */
+  public boolean hasAlliedToSelfArmy()
+  {
+    for (Army army : armies)
+    {
+      if (army.getController() == controller)
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   // Returns null if there is no allied army
   public Army getAlliedArmy()
   {

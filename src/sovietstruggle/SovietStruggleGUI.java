@@ -472,6 +472,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   {//GEN-HEADEREND:event_endTurnButtonActionPerformed
     playerFaction.endTurn();
 
+    System.out.println("enemyFactions: " + enemyFactions);
     for (Faction fac : enemyFactions)
     {
       fac.endTurn();
@@ -592,9 +593,9 @@ public class SovietStruggleGUI extends javax.swing.JFrame
 
     enemyFactions = new ArrayList<>();
 
-    Faction kolchak = new Faction("Kolchak", Color.GRAY);
+    Faction kolchak = new EnemyFaction("Kolchak", Color.GRAY);
     enemyFactions.add(kolchak);
-    Faction denikin = new Faction("Denikin", new Color(153, 51, 102));
+    Faction denikin = new EnemyFaction("Denikin", new Color(153, 51, 102));
     enemyFactions.add(denikin);
 
     // Create areas
@@ -617,6 +618,8 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     Area lowerNorCau = createArea("Lower North Caucasus", IMG_PATH + "lenin.jpg", denikin);
 
     // Add areas to each other as border areas
+    
+    // Areas controlled by player
     moscow.addBorderArea(new Area[]
     {
       westOblasts, crimea, cenRussia, petro
@@ -637,12 +640,42 @@ public class SovietStruggleGUI extends javax.swing.JFrame
       crimea, moscow, petro, westSiber, southSiber
     });
 
+    latvia.addBorderArea(westOblasts);
+
+    petro.addBorderArea(new Area[]
+    {
+      westSiber, cenRussia, moscow, westOblasts
+    });
+    
+    // Areas controlled by Denikin
+
     upperNorCau.addBorderArea(new Area[]
     {
       crimea, lowerNorCau
     });
+    
+    lowerNorCau.addBorderArea(new Area[]
+    {
+      upperNorCau, crimea
+    });
 
-    latvia.addBorderArea(westOblasts);
+    
+    // Areas controlled by Kolchak
+    
+    westSiber.addBorderArea(new Area[]
+    {
+      eastSiber, southSiber, cenRussia, petro
+    });
+
+    eastSiber.addBorderArea(new Area[]
+    {
+      southSiber, westSiber
+    });
+
+    southSiber.addBorderArea(new Area[]
+    {
+      westSiber, eastSiber, cenRussia
+    });
 
     areaModel = new DefaultListModel<>();
     updateAreaList();

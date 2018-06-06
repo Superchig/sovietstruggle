@@ -100,4 +100,10 @@ public class Faction
   {
     politicalPower += basePowerIncrease;
   }
+  
+  @Override
+  public String toString()
+  {
+    return name;
+  }
 }

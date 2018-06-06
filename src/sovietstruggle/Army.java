@@ -33,11 +33,11 @@ public class Army
     Area oldArea = area;
     directMoveTo(newArea);
 
-    if (newArea.hasEnemyToPlayerArmy())
+    if (newArea.hasEnemyToThisArmy(this))
     {
       Army defender = area.getAlliedArmy();
       System.out.println("defender: " + defender);
-      handleBattle(defender, oldArea);
+      handleBattle(defender, oldArea);  
     }
     else
     {

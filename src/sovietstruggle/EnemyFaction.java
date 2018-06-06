@@ -26,16 +26,36 @@ public class EnemyFaction extends Faction
     
     for (Area area : getAreas())
     {
-      if (area.bordersEnemy() &&
-              !(area.hasAlliedToPlayerArmy() && area.getAlliedArmy().getDivisions() >= 20))
-        eligibleAreas.add(area);
+//      System.out.println(area.getName() + " borders enemy? " + area.bordersEnemy());
+//      if (area.bordersEnemy() &&
+//              ((area.hasAlliedToSelfArmy() && area.getAlliedArmy().getDivisions() < 20) ||
+//              !area.hasAlliedToSelfArmy()))
+//        eligibleAreas.add(area);
+      if (area.bordersEnemy())
+      {
+        if (!area.hasAlliedToSelfArmy())
+        {
+          eligibleAreas.add(area);
+        }
+        else if (area.getAlliedArmy().getDivisions() < 20)
+        {
+          eligibleAreas.add(area);
+        }
+      }
     }
+    
+    if (eligibleAreas.isEmpty())
+    {
+      return;
+    }
+    
+//    System.out.println(toString() + " eligibleAreas: " + eligibleAreas);
     
     for (int i = 0; i < numArmies; i++)
     {
       int rand = (int)(Math.random() * eligibleAreas.size());
       Area area = eligibleAreas.get(rand);
-      if (area.hasAlliedToPlayerArmy())
+      if (area.hasAlliedToSelfArmy())
       {
         area.getAlliedArmy().expand(1);
       }
@@ -51,15 +71,39 @@ public class EnemyFaction extends Faction
   {
     Army army = fromArea.getAlliedArmy();
     Area attacked = fromArea.getRandEnemyBorderArea();
+    Double ranNum = Math.random() * 100;
+    System.out.println("ranNum: " + ranNum);
+    System.out.println("attacked: " + attacked.getName());
     
-    if (!attacked.getArmies().isEmpty())
+    if (attacked.getArmies().isEmpty() && ranNum < 80)
     {
       army.moveTo(attacked);
     }
-     // This army is allied to the enemy, so it's more of an enemy army
     else if (attacked.hasAlliedToPlayerArmy())
     {
+      int attDivs = army.getDivisions(), defDivs = attacked.getAlliedArmy().getDivisions();
+      double attToDefRatio = attDivs / defDivs;
       
+      if (attToDefRatio >= 5.0)
+      {
+        army.moveTo(attacked);
+      }
+      if (attToDefRatio >= 3.0 && ranNum < 80)
+      {
+        army.moveTo(attacked);
+      }
+      else if (attToDefRatio >= 2.0 && ranNum < 55) // 2 : 1 ratio
+      {
+        army.moveTo(attacked);
+      }
+      else if (attToDefRatio >= 3.0/2.0 && ranNum < 30)
+      {
+        army.moveTo(attacked);
+      }
+      else if (attToDefRatio >= 3.0/4.0 && ranNum < 10)
+      {
+        army.moveTo(attacked);
+      }
     }
   }
   
@@ -79,10 +123,9 @@ public class EnemyFaction extends Faction
     }
     
     // Decide whether or not to attack and where to attack
-    ArrayList<Area> armedAreas = new ArrayList<>();
     for (Area a : getAreas())
     {
-      if (a.bordersEnemy() && a.hasAlliedToPlayerArmy())
+      if (a.bordersEnemy() && a.hasAlliedToSelfArmy())
       {
         decideToAttack(a);
       }
