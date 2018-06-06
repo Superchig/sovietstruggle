@@ -82,7 +82,7 @@ public class AreaButton extends JButton
 
   public void showPopupMenu()
   {
-    if (area.hasAlliedArmy())
+    if (area.hasAlliedToPlayerArmy())
     {
       showWhenArmyMenu();
     }
@@ -91,18 +91,18 @@ public class AreaButton extends JButton
   public void updateIcon()
   {
     setBackground(area.getController().getColor());
-    
-    if (area.hasAlliedArmy())
-    {
-      setIcon(PEAKED_CAP);
-      height = 20;
-      width = 20; // 30 is more proportional
-    }
-    else
+
+    if (area.getArmies().isEmpty())
     {
       setIcon(MAP_MARKER);
       height = 20;
       width = 20;
+    }
+    else
+    {
+      setIcon(PEAKED_CAP);
+      height = 20;
+      width = 20; // 30 is more proportional
     }
   }
 
@@ -130,7 +130,7 @@ public class AreaButton extends JButton
     for (int i = 0; i < armies.size(); i++)
     {
       Army possibleArmy = armies.get(i);
-      
+
       if (possibleArmy.getController() == game.getPlayerFaction())
       {
         game.showMoveArmyDialog(possibleArmy);
@@ -141,7 +141,7 @@ public class AreaButton extends JButton
 
   private static Icon MAP_MARKER = TextFormat.scaleImage(SovietStruggleGUI.IMG_PATH + "map_marker.png", 20);
   private static Icon PEAKED_CAP = TextFormat.scaleImage(SovietStruggleGUI.IMG_PATH + "peaked_cap.png", 20);
-  
+
   private Area area;
   private SovietStruggleGUI game;
   private int xLocation, yLocation, width, height;

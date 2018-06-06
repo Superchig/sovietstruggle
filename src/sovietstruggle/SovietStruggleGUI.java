@@ -514,7 +514,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
         return;
       }
     }
-    
+
     Army result = playerFaction.makeArmy(first.getName(), first.getArea());
     result.expand(-1); // Remove first initial division
 
@@ -637,6 +637,11 @@ public class SovietStruggleGUI extends javax.swing.JFrame
       crimea, moscow, petro, westSiber, southSiber
     });
 
+    upperNorCau.addBorderArea(new Area[]
+    {
+      crimea, lowerNorCau
+    });
+
     latvia.addBorderArea(westOblasts);
 
     areaModel = new DefaultListModel<>();
@@ -650,6 +655,9 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     {
       armyModel.addElement(a);
     }
+
+    Army denRemn = denikin.makeArmy("Denikin's Remnants", upperNorCau);
+    denRemn.setDivisions(10);
 
     // Create decisions
     Decision dissolve = new Decision("Dissolve the Russian Constituent Assembly!",
@@ -665,6 +673,18 @@ public class SovietStruggleGUI extends javax.swing.JFrame
             (player) ->
     {
       player.makeArmy("Militant Cheka", moscow);
+    });
+
+    playerFaction.addDecision("Emergency Deployment", "To defend the republic, we must call available men to our two fronts!",
+            new Action()
+    {
+      @Override
+      public void act(Faction player)
+      {
+        player.makeArmy("Denikin Destroyers", crimea).setDivisions(10);
+        player.makeArmy("Southeastern Army", cenRussia).setDivisions(5);
+        player.makeArmy("Northeastern Army", petro).setDivisions(5);
+      }
     });
   }
 
@@ -764,7 +784,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
 
   private Area createArea(String name, String imgPath, Faction fac)
   {
-    Area area = new Area(name, imgPath, fac);
+    Area area = new Area(name, imgPath, fac, this);
     areas.add(area);
     fac.addArea(area);
     return area;

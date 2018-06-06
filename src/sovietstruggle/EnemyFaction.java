@@ -27,7 +27,7 @@ public class EnemyFaction extends Faction
     for (Area area : getAreas())
     {
       if (area.bordersEnemy() &&
-              !(area.hasAlliedArmy() && area.getAlliedArmy().getDivisions() >= 20))
+              !(area.hasAlliedToPlayerArmy() && area.getAlliedArmy().getDivisions() >= 20))
         eligibleAreas.add(area);
     }
     
@@ -35,7 +35,7 @@ public class EnemyFaction extends Faction
     {
       int rand = (int)(Math.random() * eligibleAreas.size());
       Area area = eligibleAreas.get(rand);
-      if (area.hasAlliedArmy())
+      if (area.hasAlliedToPlayerArmy())
       {
         area.getAlliedArmy().expand(1);
       }
@@ -57,7 +57,7 @@ public class EnemyFaction extends Faction
       army.moveTo(attacked);
     }
      // This army is allied to the enemy, so it's more of an enemy army
-    else if (attacked.hasAlliedArmy())
+    else if (attacked.hasAlliedToPlayerArmy())
     {
       
     }
@@ -82,7 +82,7 @@ public class EnemyFaction extends Faction
     ArrayList<Area> armedAreas = new ArrayList<>();
     for (Area a : getAreas())
     {
-      if (a.bordersEnemy() && a.hasAlliedArmy())
+      if (a.bordersEnemy() && a.hasAlliedToPlayerArmy())
       {
         decideToAttack(a);
       }
