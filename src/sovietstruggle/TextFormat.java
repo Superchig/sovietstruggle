@@ -14,9 +14,11 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.NumberFormat;
+import java.util.Scanner;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
 /**
  *
@@ -48,11 +50,15 @@ public class TextFormat
   {
     try
     {
-      byte[] encoded = Files.readAllBytes(Paths.get(path));
-      return new String(encoded, Charset.defaultCharset())
-              .replace("\n\n", "rEaN").replace("\n", " ")
+//      byte[] encoded = Files.readAllBytes(Paths.get(path));
+//      return new String(encoded, Charset.defaultCharset())
+//              .replace("\n\n", "rEaN").replace("\n", " ")
+//              .replace("rEaN", "\n\n");
+      URL url = JPanel.class.getResource(path);
+      String result = new Scanner(url.openStream(), "UTF-8").useDelimiter("\\A").next();
+      return result.replace("\n\n", "rEaN").replace("\n", " ")
               .replace("rEaN", "\n\n");
-    } catch (IOException e)
+    } catch (Exception e)
     {
       e.printStackTrace();
       return "Error In Reading File";
@@ -70,7 +76,8 @@ public class TextFormat
       }
       else
       {
-        img = ImageIO.read(new File(imgPath));
+//        img = ImageIO.read(new File(imgPath));
+        img = ImageIO.read(JPanel.class.getResource(imgPath));
       }
       return new ImageIcon(img.getScaledInstance(-1, imgHeight, Image.SCALE_SMOOTH));
     } catch (IOException e)
@@ -109,7 +116,7 @@ public class TextFormat
     int strLen = str.length();
     if (strLen >= len)
     {
-      return str.substring(0, len-4) + "... ";
+      return str.substring(0, len - 4) + "... ";
     }
     else
     {

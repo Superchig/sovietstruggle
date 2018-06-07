@@ -74,7 +74,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     combineButton = new javax.swing.JButton();
     mapPane = new javax.swing.JLayeredPane();
     setupAreaGUI();
-    mainMap = new sovietstruggle.mapPanel();
+    mainMap = new sovietstruggle.MapPanel();
     eventLogScrollPane = new javax.swing.JScrollPane();
     eventLog = new javax.swing.JTextArea();
     eventLogTitle = new javax.swing.JLabel();
@@ -942,8 +942,8 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   }
 
   // Custom variables declaration
-  public static final String IMG_PATH = "src/sovietstruggle/img/";
-  private static final String TEXT_PATH = "src/sovietstruggle/text/";
+  public static final String IMG_PATH = "/sovietstruggle/img/";
+  private static final String TEXT_PATH = "/sovietstruggle/text/";
   private static final Color BG_COLOR = new Color(214, 217, 223);
   private static final int DIVISION_COST = 5;
 
@@ -985,7 +985,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
   private javax.swing.JTextArea jTextArea2;
   private javax.swing.JLabel leninImage;
   private javax.swing.JLabel leninText;
-  private sovietstruggle.mapPanel mainMap;
+  private sovietstruggle.MapPanel mainMap;
   private javax.swing.JPopupMenu mainMapMenu;
   private javax.swing.JLayeredPane mapPane;
   private javax.swing.JMenuItem moveArmy;

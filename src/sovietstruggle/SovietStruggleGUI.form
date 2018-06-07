@@ -377,7 +377,7 @@
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="sovietstruggle.mapPanel" name="mainMap">
+                <Component class="sovietstruggle.MapPanel" name="mainMap">
                 </Component>
               </SubComponents>
             </Container>

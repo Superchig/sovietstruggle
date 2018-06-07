@@ -9,13 +9,13 @@ package sovietstruggle;
  *
  * @author chiggie
  */
-public class mapPanel extends javax.swing.JPanel
+public class MapPanel extends javax.swing.JPanel
 {
 
   /**
    * Creates new form mapPanel
    */
-  public mapPanel()
+  public MapPanel()
   {
     initComponents();
   }
