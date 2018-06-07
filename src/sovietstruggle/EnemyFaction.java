@@ -32,8 +32,7 @@ public class EnemyFaction extends Faction
 //              ((area.hasAlliedToSelfArmy() && area.getAlliedArmy().getDivisions() < 20) ||
 //              !area.hasAlliedToSelfArmy()))
 //        eligibleAreas.add(area);
-      if (area.bordersEnemy()
-              /* && (!area.hasAlliedToSelfArmy() || area.getAlliedArmy().getDivisions() < 20) */)
+      if (area.bordersEnemy() /* && (!area.hasAlliedToSelfArmy() || area.getAlliedArmy().getDivisions() < 20) */)
       {
         eligibleAreas.add(area);
       }
@@ -50,7 +49,6 @@ public class EnemyFaction extends Faction
 //    {
 //      System.out.print(area.getName() + ", ");
 //    }
-
     for (int i = 0; i < numArmies; i++)
     {
       int rand = (int) (Math.random() * eligibleAreas.size());
@@ -59,8 +57,7 @@ public class EnemyFaction extends Faction
       {
 //        getGame().logPrintln("Expanding army at " + area.getName());
         area.getAlliedArmy().expand(1);
-      }
-      else
+      } else
       {
 //        getGame().logPrintln("Creating small army at " + area.getName());
         makeArmy(area.getName() + " Army Group", area);
@@ -71,38 +68,29 @@ public class EnemyFaction extends Faction
   // Precondition: Area has allied army
   private void decideToAttack(Area fromArea)
   {
+    getGame().logPrintln("Deciding to attack from " + fromArea.getName());
     Army army = fromArea.getAlliedArmy();
     Area attacked = fromArea.getRandEnemyBorderArea();
     Double ranNum = Math.random() * 100;
 //    getGame().logPrintln("ranNum: " + ranNum);
 
-    if (attacked.getArmies().isEmpty() && ranNum < 80)
+    if (attacked.getArmies().isEmpty())
     {
-      army.moveTo(attacked);
-    }
-    else if (attacked.hasAlliedToPlayerArmy())
+      if (ranNum < 80)
+      {
+        army.moveTo(attacked);
+      }
+    } else if (!attacked.hasAlliedToSelfArmy())
     {
       int attDivs = army.getDivisions(), defDivs = attacked.getAlliedArmy().getDivisions();
       double attToDefRatio = attDivs / defDivs;
+      System.out.println("attToDefRatio: " + attToDefRatio);
 
-      if (attToDefRatio >= 5.0)
+      if (attToDefRatio >= 5.0 || (attToDefRatio >= 3.0 && ranNum < 80)
+              || (attToDefRatio >= 2.0 && ranNum < 65) || (attToDefRatio >= 3.0 / 2.0 && ranNum < 30)
+              || (attToDefRatio >= 1.0 && ranNum < 50) || (attToDefRatio >= 3.0 / 4.0 && ranNum < 10))
       {
-        army.moveTo(attacked);
-      }
-      if (attToDefRatio >= 3.0 && ranNum < 80)
-      {
-        army.moveTo(attacked);
-      }
-      else if (attToDefRatio >= 2.0 && ranNum < 55) // 2 : 1 ratio
-      {
-        army.moveTo(attacked);
-      }
-      else if (attToDefRatio >= 3.0 / 2.0 && ranNum < 30)
-      {
-        army.moveTo(attacked);
-      }
-      else if (attToDefRatio >= 3.0 / 4.0 && ranNum < 10)
-      {
+        System.out.println("Attacking " + attacked);
         army.moveTo(attacked);
       }
     }
@@ -120,8 +108,7 @@ public class EnemyFaction extends Faction
     if (numAreas >= 1 && numAreas <= 3)
     {
       distributeArmies(numAreas);
-    }
-    else
+    } else
     {
       distributeArmies((numAreas + 1) / 2 + 1);
     }

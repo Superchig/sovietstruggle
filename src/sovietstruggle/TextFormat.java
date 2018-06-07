@@ -82,7 +82,7 @@ public class TextFormat
       return new ImageIcon(img.getScaledInstance(-1, imgHeight, Image.SCALE_SMOOTH));
     } catch (IOException e)
     {
-      e.printStackTrace();
+      // e.printStackTrace();
       System.out.println("Error: Failed to scale image at " + imgPath);
       return new ImageIcon(imgPath);
     }

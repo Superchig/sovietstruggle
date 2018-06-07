@@ -131,8 +131,9 @@ public class AreaButton extends JButton
   {
     String info = "";
 
-    info += "Name: " + area.getName() + "\n\n";
-
+    info += "Name: " + area.getName() + "\n";
+    info += "Controller: " + area.getController() + "\n\n";
+    
     if (area.getArmies().isEmpty())
     {
       info += "Armies: None";

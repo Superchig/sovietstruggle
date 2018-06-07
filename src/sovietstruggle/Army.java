@@ -125,8 +125,8 @@ public class Army
     // Calculate and act on division losses
     for (int dice = 0; dice < defenderRolls.length; dice++)
     {
-//      game.logPrintln("allyRolls: " + Arrays.toString(allyRolls));
-//      game.logPrintln("defenderRolls: " + Arrays.toString(defenderRolls));
+      game.logPrintln("allyRolls: " + Arrays.toString(allyRolls));
+      game.logPrintln("defenderRolls: " + Arrays.toString(defenderRolls));
       int allyMaxPos = TextFormat.findMaxPos(allyRolls);
       int allyMax = allyRolls[allyMaxPos];
       allyRolls[allyMaxPos] = -1; // Represent removed die with -1
