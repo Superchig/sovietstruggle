@@ -17,6 +17,7 @@ public class Army
   private String name;
   private Area area;
   private Faction controller;
+  private SovietStruggleGUI game;
   private int divisions;
 
   public Army(String name, Area area, Faction controller)
@@ -24,52 +25,84 @@ public class Army
     this.name = name;
     this.area = area;
     this.controller = controller;
+    game = area.getGame();
     divisions = 1;
   }
 
   // Should handle what happens if there is an enemy army in the area (battle)
   public void moveTo(Area newArea)
   {
+    game.logPrintln(name + " moves to " + newArea.getName());
     Area oldArea = area;
     directMoveTo(newArea);
 
     if (newArea.hasEnemyToThisArmy(this))
     {
       Army defender = area.getAlliedArmy();
-      System.out.println("defender: " + defender);
-      handleBattle(defender, oldArea);  
+      game.logPrintln(oldArea.getName() + "'s " + name + " attacks "
+              + newArea.getName() + "'s " + defender.getName());
+      handleBattle(defender, oldArea);
     }
     else
     {
-      area.setController(controller);
+      conquer(area);
     }
   }
 
   private void handleBattle(Army defender, Area oldArea)
   {
-    // To be implemented
+    game.logPrintln("Attacked: " + defender.getName());
+    
     int origDivisions = divisions, origDefenderDivisions = defender.divisions;
 
-    for (int rounds = 0; rounds < 3; rounds++)
+    double ranNum = Math.random();
+    int numRounds;
+    if (ranNum < 0.33)
     {
-      System.out.println("--- Round " + rounds + " ---");
+      numRounds = 1;
+    }
+    else if (ranNum < 0.66)
+    {
+      numRounds = 3;
+    }
+    else
+    {
+      numRounds = 100;
+    }
+
+    game.logPrintln("numRounds: " + numRounds);
+    for (int rounds = 0; rounds < numRounds; rounds++)
+    {
+//      game.logPrintln("--- Round " + rounds + " ---");
       handleBattleRound(defender);
 
       if (defender.divisions < 0.7 * origDefenderDivisions)
       {
         defender.retreat(origDefenderDivisions);
-        area.setController(controller);
-        System.out.println("Attacker wins!");
+        conquer(area);
+//        game.logPrintln("Attacker wins!");
+        int attLosses = origDivisions - divisions;
+        game.logPrintln("Attacker has lost " + attLosses + " divisions");
+        int defLosses = origDefenderDivisions - defender.divisions;
+        game.logPrintln("Defender has lost " + defLosses + " divisions");
         return;
       }
       else if (divisions < 0.7 * origDivisions)
       {
-        System.out.println("Defender wins!");
+//        game.logPrintln("Defender wins!");
         retreat(origDivisions);
+        int attLosses = origDivisions - divisions;
+        game.logPrintln("Attacker has lost " + attLosses + " divisions");
+        int defLosses = origDefenderDivisions - defender.divisions;
+        game.logPrintln("Defender has lost " + defLosses + " divisions");
         return;
       }
     }
-    
+
+    int attLosses = origDivisions - divisions;
+    game.logPrintln("Attacker has lost " + attLosses + " divisions");
+    int defLosses = origDefenderDivisions - defender.divisions;
+    game.logPrintln("Defender has lost " + defLosses + " divisions");
     directMoveTo(oldArea);
   }
 
@@ -92,8 +125,8 @@ public class Army
     // Calculate and act on division losses
     for (int dice = 0; dice < defenderRolls.length; dice++)
     {
-      System.out.println("allyRolls: " + Arrays.toString(allyRolls));
-      System.out.println("defenderRolls: " + Arrays.toString(defenderRolls));
+//      game.logPrintln("allyRolls: " + Arrays.toString(allyRolls));
+//      game.logPrintln("defenderRolls: " + Arrays.toString(defenderRolls));
       int allyMaxPos = TextFormat.findMaxPos(allyRolls);
       int allyMax = allyRolls[allyMaxPos];
       allyRolls[allyMaxPos] = -1; // Represent removed die with -1
@@ -104,12 +137,12 @@ public class Army
 
       if (allyMax > defenderMax)
       {
-        System.out.println("Defender lost a division.");
+//        game.logPrintln("Defender lost a division.");
         defender.divisions--;
       }
       else if (defenderMax >= allyMax)
       {
-        System.out.println("Attacker lost a division.");
+//        game.logPrintln("Attacker lost a division.");
         divisions--;
       }
     }
@@ -156,15 +189,23 @@ public class Army
       }
       else if (areaToRetreat.getArmies().size() == 2)
       {
-        System.out.println("Combining armies in " + area.getName());
+        game.logPrintln("Combining armies in " + area.getName());
         Army first = areaToRetreat.getArmies().get(0);
         Army second = areaToRetreat.getArmies().get(1);
         Army combined = controller.makeArmy(name, area);
-        
+
         combined.divisions = first.divisions + second.divisions;
-        System.out.println("Num armies in " + area.getName() + ": " + areaToRetreat.getArmies().size());
+        game.logPrintln("Num armies in " + area.getName() + ": " + areaToRetreat.getArmies().size());
       }
     }
+  }
+
+  private void conquer(Area area)
+  {
+    area.setController(controller);
+    Faction defender = area.getController();
+    defender.removeArea(area);
+    controller.addArea(area);
   }
 
   public void expand(int numDivs)

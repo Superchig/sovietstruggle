@@ -21,8 +21,9 @@ public class Faction
   private int politicalPower, basePowerIncrease;
   private ArrayList<Decision> decisions;
   private Color color;
+  private SovietStruggleGUI game;
 
-  public Faction(String name, Color color)
+  public Faction(String name, Color color, SovietStruggleGUI game)
   {
     this.name = name;
     this.color = color;
@@ -31,6 +32,7 @@ public class Faction
     politicalPower = 50;
     basePowerIncrease = 20;
     decisions = new ArrayList<>();
+    this.game = game;
   }
 
   public int getPoliticalPower()
@@ -58,6 +60,11 @@ public class Faction
     areas.add(area);
   }
   
+  public void removeArea(Area area)
+  {
+    areas.remove(area);
+  }
+  
   public ArrayList<Army> getArmies()
   {
     return armies;
@@ -76,6 +83,16 @@ public class Faction
   public Color getColor()
   {
     return color;
+  }
+
+  public String getName()
+  {
+    return name;
+  }
+
+  public SovietStruggleGUI getGame()
+  {
+    return game;
   }
 
   public void addArmy(Army a)

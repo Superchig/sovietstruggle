@@ -243,6 +243,11 @@ public class Area
     return null;
   }
 
+  public SovietStruggleGUI getGame()
+  {
+    return game;
+  }
+
   @Override
   public String toString()
   {
