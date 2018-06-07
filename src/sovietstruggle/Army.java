@@ -141,7 +141,7 @@ public class Army
    */
   private void retreat(int origDivisions)
   {
-    Area areaToRetreat = area.getRandAlliedArea(this); // TODO change so this area is allied to its user
+    Area areaToRetreat = area.getRandAlliedArea(this);
     if (areaToRetreat == null) // defender's area is surrounded by enemies
     {
       destroy();
@@ -153,6 +153,16 @@ public class Army
       if (origDivisions / 2 == 0)
       {
         destroy();
+      }
+      else if (areaToRetreat.getArmies().size() == 2)
+      {
+        System.out.println("Combining armies in " + area.getName());
+        Army first = areaToRetreat.getArmies().get(0);
+        Army second = areaToRetreat.getArmies().get(1);
+        Army combined = controller.makeArmy(name, area);
+        
+        combined.divisions = first.divisions + second.divisions;
+        System.out.println("Num armies in " + area.getName() + ": " + areaToRetreat.getArmies().size());
       }
     }
   }
@@ -200,7 +210,7 @@ public class Army
   @Override
   public String toString()
   {
-    return area.getName() + TextFormat.spaces(13) + name + TextFormat.spaces(13)
+    return TextFormat.convMaxLen(area.getName(), 20) + TextFormat.convMaxLen(name, 20)
             + TextFormat.normNumFormat(getManpower());
   }
 }

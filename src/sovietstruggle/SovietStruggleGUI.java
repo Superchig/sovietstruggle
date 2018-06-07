@@ -120,6 +120,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     leninText.setText("<html>\n<p style=\"text-align:center\">\nComrade Lenin Is Always Watching!\n</p>\n</html>");
     leninText.setFocusable(false);
 
+    armyList.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
     armyList.setModel(armyModel);
     armyList.addMouseListener(new java.awt.event.MouseAdapter()
     {
@@ -278,7 +279,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
 
   areaList.setModel(areaModel);
   areaList.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-  areaList.setVisibleRowCount(4);
+  areaList.setVisibleRowCount(7);
   areaList.setCellRenderer(new AreaListRenderer(areas));
   areaScroll.setViewportView(areaList);
 
@@ -314,7 +315,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
       .addGroup(AreaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addComponent(areaScroll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addComponent(updateAreaButton))
-      .addContainerGap(762, Short.MAX_VALUE))
+      .addContainerGap(714, Short.MAX_VALUE))
   );
 
   jTabbedPane1.addTab("Areas", AreaPanel);
@@ -853,7 +854,7 @@ public class SovietStruggleGUI extends javax.swing.JFrame
     mainMapMenu.show(mapPane, aButton.getX() + 20, aButton.getY());
   }
 
-  private void showPlainDialog(String text, String title)
+  public void showPlainDialog(String text, String title)
   {
     JTextArea msg = new JTextArea(text);
     msg.setLineWrap(true);

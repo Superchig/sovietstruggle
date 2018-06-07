@@ -67,7 +67,8 @@ public class TextFormat
       if (imgPath.indexOf("http") == 0)
       {
         img = ImageIO.read(new URL(imgPath));
-      } else
+      }
+      else
       {
         img = ImageIO.read(new File(imgPath));
       }
@@ -79,7 +80,7 @@ public class TextFormat
       return new ImageIcon(imgPath);
     }
   }
-  
+
   public static int findMaxPos(int[] nums)
   {
     int maxPos = 0;
@@ -91,5 +92,28 @@ public class TextFormat
       }
     }
     return maxPos;
+  }
+
+  /**
+   * Returns a possibly truncated version of a string. If the length of str is
+   * greater than len, then this method returns a substring plus an ellipsis
+   * such that its length is equal to len. Otherwise, this method just returns
+   * str plus a sufficient number of spaces to reach a length of len.
+   *
+   * @param str string to be returned or truncated and edited
+   * @param len maximum length of string
+   * @return a possibly truncated version of str
+   */
+  public static String convMaxLen(String str, int len)
+  {
+    int strLen = str.length();
+    if (strLen >= len)
+    {
+      return str.substring(0, len-4) + "... ";
+    }
+    else
+    {
+      return str + spaces(len - strLen);
+    }
   }
 }

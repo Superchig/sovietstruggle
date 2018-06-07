@@ -82,10 +82,30 @@ public class AreaButton extends JButton
 
   public void showPopupMenu()
   {
+    JPopupMenu menu = new JPopupMenu();
+
+    JMenuItem info = new JMenuItem("Info");
+    info.addActionListener((actionEvent) ->
+    {
+      showAreaInfoDialog();
+    });
+    menu.add(info);
+
     if (area.hasAlliedToPlayerArmy())
     {
-      showWhenArmyMenu();
+      JMenuItem move = new JMenuItem("Move");
+      move.addActionListener(new ActionListener()
+      {
+        @Override
+        public void actionPerformed(ActionEvent ae)
+        {
+          showMoveArmyDialog();
+        }
+      });
+      menu.add(move);
     }
+
+    menu.show(game.getMapPane(), xLocation + 20, yLocation);
   }
 
   public void updateIcon()
@@ -106,22 +126,27 @@ public class AreaButton extends JButton
     }
   }
 
-  private void showWhenArmyMenu()
+  private void showAreaInfoDialog()
   {
-    JPopupMenu menu = new JPopupMenu();
-    JMenuItem move = new JMenuItem("Move");
+    String info = "";
 
-    move.addActionListener(new ActionListener()
+    info += "Name: " + area.getName() + "\n\n";
+
+    if (area.getArmies().isEmpty())
     {
-      @Override
-      public void actionPerformed(ActionEvent ae)
+      info += "Armies: None";
+    }
+    else
+    {
+      info += "Armies" + "\n";
+      info += "-----------------" + "\n";
+      for (Army army : area.getArmies())
       {
-        showMoveArmyDialog();
+        info += army + "\n";
       }
-    });
+    }
 
-    menu.add(move);
-    menu.show(game.getMapPane(), xLocation + 20, yLocation);
+    game.showPlainDialog(info, area.getName() + " Info");
   }
 
   private void showMoveArmyDialog()

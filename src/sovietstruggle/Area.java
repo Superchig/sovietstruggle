@@ -246,7 +246,7 @@ public class Area
   @Override
   public String toString()
   {
-    String result = name + TextFormat.spaces(13 - name.length());
+    String result = TextFormat.convMaxLen(name, 20);
 
     boolean hasAllied = hasAlliedToPlayerArmy();
     boolean hasEnemy = hasEnemyToPlayerArmy();

@@ -21,7 +21,7 @@ public class AreaListRenderer extends DefaultListCellRenderer
   // Equal to SovietStruggleGUI's areas
 
   private ArrayList<Area> areas;
-  private Font font = new Font("Monospaced", Font.PLAIN, 16);
+  private Font font = new Font("Monospaced", Font.PLAIN, 12);
 
   public AreaListRenderer(ArrayList<Area> areas)
   {
